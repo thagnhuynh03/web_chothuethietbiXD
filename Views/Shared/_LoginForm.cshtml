@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@model TaiKhoan
+
+<!-- Form đăng nhập -->
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "login_form" }))
+{
+    <div class="login_form_header">
+        <h5>ĐĂNG NHẬP TÀI KHOẢN</h5>
+        <img class="login_form_close_icon" src="/images/close_icon.svg" alt="">
+    </div>
+
+    @Html.Hidden("actionType", "login")
+
+    @Html.TextBoxFor(m => m.tenDangNhap, new { @placeholder = "Tài khoản", @class = "login_form_input" })
+    @Html.PasswordFor(m => m.matKhau, new { @placeholder = "Mật khẩu", @class = "login_form_input" })
+
+    @if (ViewBag.LoginError != null)
+    {
+        <div class="error-message">
+            <p>@ViewBag.LoginError</p>
+        </div>
+    }
+
+    <div class="flex foget_pass_n_save">
+        <div class="flex">
+            <input type="checkbox" name="is_save" id="is_save">
+            <label for="is_save">Lưu thông tin đăng nhập</label>
+        </div>
+        <a href="#">Quên mật khẩu</a>
+    </div>
+
+    <button class="login_submit_button" type="submit">ĐĂNG NHẬP</button>
+
+    <p>Khách hàng mới? <a href="#" class="open_signup_form_btn red-text bold">Tạo tài khoản</a></p>
+}
+<div class="blur_overlay login"></div>
+

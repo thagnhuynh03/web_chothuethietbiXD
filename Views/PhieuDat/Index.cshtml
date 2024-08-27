@@ -1,0 +1,92 @@
+﻿@model IEnumerable<WebChoThueThietBiXD.Models.PhieuDat>
+
+@{
+    ViewData["Title"] = "Danh sách phiếu đặt";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main_content">
+    <div class="title-and-actions">
+        <h2>Danh sách phiếu đặt</h2>
+        <div class="actions">
+            <a class="add-btn" href="~/PhieuDat/Create">
+                <img src="/images/add.png" class="icon">
+                <span>Thêm</span>
+            </a>
+            <a class="download-btn" asp-controller="PhieuDat" asp-action="FilterDuyet" style="text-decoration:none;">
+                <span>Duyệt phiếu đặt</span>
+            </a>
+        </div>
+    </div>
+    <div class="search-container">
+        <form asp-controller="PhieuDat" asp-action="Search">
+            <input type="text" class="search-input" id="txtSearch" name="query" placeholder="Tìm kiếm theo mã thiết bị hoặc tên">
+            <button type="submit" id="btnSearch" style="display:none;">Search</button>
+        </form>
+        <button class="filter-btn" onclick="toggleDropdown()">
+            <img src="/images/filter.png" class="icon">
+            <span>Lọc</span>
+        </button>
+    </div>
+    <form asp-controller="PhieuDat" asp-action="Filter">
+        <div id="dropdown-filter" class="dropdown-filter-content">
+            <select id="maDanhMuc" name="trangThai" onchange="this.form.submit()" class="dropdown-filter-item">
+                <option value="">Trạng thái</option>
+                <option value="Chưa xác nhận">Chưa xác nhận</option>
+                <option value="Đã xác nhận">Đã xác nhận</option>
+                <option value="Đã hủy">Đã hủy</option>
+            </select>
+            <div style="margin-left:20px;">
+                <label style="font-size:13px;">Ngày tạo phiếu</label>
+                <div>
+                    <input type="date" name="start_taoPhieu" class="dropdown-filter-item">
+                    <input type="date" name="end_taoPhieu" onchange="this.form.submit()" class="dropdown-filter-item">
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Mã phiếu đặt</th>
+                <th>Tên khách hàng</th>
+                <th>Ngày tạo phiếu</th>
+                <th>Trạng thái</th>
+                <th>Địa chỉ giao</th>
+                <th>Số điện thoại giao</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.maPhieuDat</td>
+                    <td>@item.KhachHang.tenKhachHang</td>
+                    <td>@item.ngayTaoPhieu.ToString("dd/MM/yyyy")</td>
+                    <td><span>@item.trangThaiPhieuDat</span></td>
+                    <td>@item.diaCHiGiaoHang</td>
+                    <td>@item.soDienThoaiGiaoHang</td>
+                    <td>
+                        <a class="edit-btn" asp-controller="PhieuDat" asp-action="Edit" asp-route-id="@item.maPhieuDat">
+                            <img src="/images/pen.png">
+                        </a>
+                        @if (item.trangThaiPhieuDat != "Đã xác nhận" || item.trangThaiPhieuDat != "Đã hủy")
+                        {
+                            <a class="delete-btn" asp-controller="PhieuDat" asp-action="DuyetPhieuDat" asp-route-id="@item.maPhieuDat">
+                                <img src="/images/approve.png">
+                            </a>
+                        }
+
+                        <a class="delete-btn" asp-controller="PhieuDat" asp-action="Delete" asp-route-id="@item.maPhieuDat">
+                            <img src="/images/bin.png">
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

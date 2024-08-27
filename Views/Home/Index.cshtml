@@ -1,0 +1,124 @@
+﻿@using Microsoft.EntityFrameworkCore;
+
+@inject WebChoThueThietBiXD.Data.WebChoThueThietBiXDContext _context
+@{
+    ViewData["Title"] = "Home Page";
+    var danhSachSanPhams = ViewData["danhSachSanPhams"] as List<WebChoThueThietBiXD.Models.ThietBi>;
+    var userName = User.Identity.Name;
+    var user = _context.TaiKhoan.FirstOrDefault(u => u.tenDangNhap == userName);
+    var gioHang = new List<WebChoThueThietBiXD.Models.GioHang>();
+    if (user != null)
+    {
+        gioHang = _context.GioHang
+            .Include(g => g.ThietBi) // Ensure 'Include' is recognized and ThietBi is the correct navigation property
+            .Where(t => t.maTaiKhoan == user.maTaiKhoan)
+            .ToList();
+    }
+}
+
+<!-- Banner and Introduction -->
+@await Html.PartialAsync("_BannerAndIntroduction")
+
+<main>
+    <!-- About Us Section -->
+    <section class="about_us space">
+        <div class="about_us_image">
+        </div>
+
+        <div class="about_us_content">
+            <span>Welcome to T&T.Group</span>
+            <h2>Dịch vụ cho thuê thiết bị xây dựng</h2>
+            <p class="space">T&T là một đối tác đáng tin cậy trong lĩnh vực thiết bị xây dựng, chúng tôi cam kết cung cấp các giải pháp chất lượng và dịch vụ chuyên nghiệp để hỗ trợ mọi dự án của bạn</p>
+            <button class="learn_more_button">Xem thêm</button>
+        </div>
+    </section>
+
+    <!-- Promotional Products Section -->
+    <section class="promotional_products">
+        <div class="product_container">
+            <h2>Sản phẩm nổi bật</h2>
+            @await Html.PartialAsync("_PromotionalProducts", danhSachSanPhams)
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section class="support space">
+        <div class="support_form_container">
+            <form action="" class="support_form">
+                <div class="support_heading">
+                    <h4>Bạn cần hỗ trợ?</h4>
+                    <p>Xin vui lòng để lại thông tin yêu cầu hỗ trợ của bạn</p>
+                </div>
+                <input type="text" placeholder="Họ tên" name="" id="">
+                <input type="text" placeholder="(+84)" name="" id="">
+                <input type="text" placeholder="Email" class="support_email" name="" id="">
+                <textarea type="text" placeholder="Nội dung liên hệ" name="" class="support_content" id=""></textarea>
+                <button type="submit" class="primary-button active">GỬI YÊU CẦU</button>
+            </form>
+        </div>
+
+        <div class="support_infor">
+            <div class="support_infor_row">
+                <div class="icon">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                </div>
+                <div class="text">
+                    <p>
+                        <span>Địa chỉ</span>
+                        48 Cao Thắng, Hải Châu, Đà Nẵng
+                    </p>
+                </div>
+            </div>
+            <div class="support_infor_row">
+                <div class="icon">
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                </div>
+                <div class="text">
+                    <p>
+                        <span>Điện thoại</span>
+                        1900 1020
+                    </p>
+                </div>
+            </div>
+            <div class="support_infor_row">
+                <div class="icon">
+                    <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                </div>
+                <div class="text">
+                    <p>
+                        <span>Email</span>
+                        t&tgroup@gmail.com
+                    </p>
+                </div>
+            </div>
+            <div class="support_infor_row">
+                <div class="icon">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                </div>
+                <div class="text">
+                    <p>
+                        <span>Website</span>
+                        t&tgroup.com
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Form -->
+    @await Html.PartialAsync("_LoginForm", new TaiKhoan())
+
+    <!-- Signup Form -->
+    @await Html.PartialAsync("_SignupForm")
+    <div class="blur_overlay cart"></div>
+
+    <!-- Cart Preview -->
+    <div class="cart_previewer">
+        <h3>GIỎ HÀNG</h3>
+        <div class="cart_previewer_products">
+            @await Html.PartialAsync("_CartPreview", gioHang)
+        </div>
+        <button id="order" href="" class="create_pd primary-button"><a href="@Url.Action("PhieuDat", "PhieuDat")">TẠO PHIẾU ĐẶT</a></button>
+    </div>
+    <div class="blur_overlay cart"></div>
+</main>

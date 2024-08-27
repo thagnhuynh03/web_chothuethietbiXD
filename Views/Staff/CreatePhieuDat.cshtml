@@ -1,0 +1,122 @@
+﻿@model WebChoThueThietBiXD.ViewModels.PhieuDatViewModel
+@{
+    ViewData["Title"] = "CreatePhieuDat";
+    Layout = "~/Views/Shared/_StaffLayout.cshtml";
+}
+
+<div class="main_content" style="height: auto; margin-top: 150px; margin-left: 300px; ">
+    <div class="container">
+        <h1>Tạo phiếu đặt</h1>
+
+        <hr />
+        <form asp-controller="Staff" asp-action="CreatePhieuDat" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Thông tin phiếu đặt</h4>
+                    <div class="form-group">
+                        <label asp-for="ngayTaoPhieu" class="control-label"> Ngày tạo phiếu</label>
+                        <input asp-for="ngayTaoPhieu" id="ngayTaoPhieu" class="form-control" />
+                        <span asp-validation-for="ngayTaoPhieu" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label asp-for="trangThaiPhieuDat" class="control-label"></label>
+                        <input asp-for="trangThaiPhieuDat" class="form-control" value="Chưa xác nhận" />
+                        <span asp-validation-for="trangThaiPhieuDat" class="text-danger"></span>
+                    </div>
+                    <div class="select-group" style="width: 70%;">
+                        <div class="select-menu">
+                            <div class="select" id="province" onclick="toggleOptions('provinceOptions')">
+                                <span id="provinceSelected">Tỉnh/Thành Phố</span>
+                                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="options-list" id="provinceOptions">
+                                <!-- Add your province options here -->
+                            </div>
+                        </div>
+                        <div class="select-menu">
+                            <div class="select" id="district" onclick="toggleOptions('districtOptions')">
+                                <span id="districtSelected">Quận/Huyện</span>
+                                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="options-list" id="districtOptions">
+                                <!-- Add your district options here -->
+                            </div>
+                        </div>
+                        <div class="select-menu">
+                            <div class="select" id="ward" onclick="toggleOptions('wardOptions')">
+                                <span id="wardSelected">Xã/Phường</span>
+                                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="options-list" id="wardOptions">
+                                <!-- Add your ward options here -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Số nhà/thôn</label>
+                        <input class="form-control" id="soNha" />
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label asp-for="diaChiGiaoHang" class="control-label"></label>
+                        <input asp-for="diaChiGiaoHang" class="form-control" id="diaChi" readonly />
+                        <span asp-validation-for="diaChiGiaoHang" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="soDienThoaiGiaoHang" class="control-label">Số điện thoại giao hàng</label>
+                        <input asp-for="soDienThoaiGiaoHang" class="form-control" />
+                        <span asp-validation-for="soDienThoaiGiaoHang" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ghiChu" class="control-label">Ghi chú</label>
+                        <input asp-for="ghiChu" value="Không có" class="form-control" />
+                        <span asp-validation-for="ghiChu" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="maKhachHang" class="control-label">Tên khách hàng</label>
+                        <select asp-for="maKhachHang" class="form-control" asp-items="Model.KhachHangs"></select>
+                        <span asp-validation-for="maKhachHang" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <h4>Thông tin chi tiết phiếu đặt</h4>
+                    <div class="form-group">
+                        <label asp-for="soLuongThue" class="control-label">Số lượng thuê</label>
+                        <input asp-for="soLuongThue" class="form-control" />
+                        <span asp-validation-for="soLuongThue" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="giaThueNgay" class="control-label">Giá thuê theo ngày</label>
+                        <input asp-for="giaThueNgay" id="giaThueNgay" class="form-control" />
+                        <span asp-validation-for="giaThueNgay" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ngayBatDauThue" class="control-label">Ngày bắt đầu thuê</label>
+                        <input asp-for="ngayBatDauThue" id="ngayBatDauThue" class="form-control" />
+                        <span asp-validation-for="ngayBatDauThue" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ngayKetThucThue" class="control-label">Ngày kết thúc thuê</label>
+                        <input asp-for="ngayKetThucThue" id="ngayKetThucThue" class="form-control" />
+                        <span asp-validation-for="ngayKetThucThue" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="maThietBi" class="control-label">Thiết bị muốn thuê</label>
+                        <select asp-for="maThietBi" class="form-control" asp-items="Model.ThietBis" id="maThietBi"></select>
+                        <span asp-validation-for="maThietBi" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

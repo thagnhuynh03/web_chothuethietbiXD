@@ -1,0 +1,31 @@
+﻿@model IEnumerable<WebChoThueThietBiXD.Models.DanhMucThietBi>
+
+<nav id="sticky_nav">
+    <button class="menu_button">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+        Danh mục thiết bị
+    </button>
+
+    <div class="search_box">
+        <form class="search_bar">
+            <input class="search_text" type="text" placeholder="Tìm kiếm thiết bị..." name="" id="">
+            <button class="search_btn" type="submit">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+        </form>
+    </div>
+
+    <div class="support_hotline flex">
+        <i class="fa fa-phone-square" aria-hidden="true"></i>
+        <div class="hotline_number flex">Hỗ trợ khách hàng<span>1900 1020</span></div>
+    </div>
+
+    <ul id="sticky_menu" class="hidden">
+        @foreach (var danhmuc in Model)
+        {
+            <li>
+                <a href="@Url.Action("Category", "Home", new { maDM = danhmuc.maDanhMuc })">@danhmuc.tenDanhMuc</a>
+            </li>
+        }
+    </ul>
+</nav>

@@ -1,0 +1,197 @@
+﻿@model WebChoThueThietBiXD.Models.PhieuDat
+
+@using Microsoft.EntityFrameworkCore
+@inject WebChoThueThietBiXD.Data.WebChoThueThietBiXDContext _context
+
+@{
+    var userName = User.Identity.Name;
+    var user = _context.TaiKhoan.FirstOrDefault(u => u.tenDangNhap == userName);
+    var gioHang = new List<WebChoThueThietBiXD.Models.GioHang>();
+    if (user != null)
+    {
+        gioHang = _context.GioHang
+            .Include(g => g.ThietBi)
+            .Where(t => t.maTaiKhoan == user.maTaiKhoan)
+            .ToList();
+    }
+}
+@section Head {
+    <link rel="stylesheet" href="/styles/order_form.css">
+}
+
+<main>
+    <div class="main_content">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">
+                <strong>@TempData["SuccessMessage"]</strong>
+            </div>
+
+  
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-warning">
+                <strong>@TempData["Error"]</strong>
+            </div>
+        }
+        <h3 class="form_title">Tạo phiếu đặt thiết bị</h3>
+
+        <div class="form_content flex_col">
+           
+
+            <form asp-action="TaoPhieuDat" method="post" id="orderForm">
+                <div class="delivery_infor flex_col">
+                    <p class="infor_title">Thông tin giao hàng</p>
+                    <input type="tel" name="soDienThoaiGiaoHang" placeholder="Số điện thoại" required>
+                    <input type="text" name="diaCHiGiaoHang" placeholder="Địa chỉ giao hàng" required>
+                </div>
+
+                <div class="additional_infor flex_col">
+                    <p class="infor_title">Thông tin thêm</p>
+                    <textarea name="ghiChu" placeholder="Viết các lưu ý cho đơn của bạn..."></textarea>
+                </div>
+
+                <div class="products_infor flex_col">
+                    <p class="infor_title">Thông tin thiết bị</p>
+
+                    <table id="products_table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Thiết bị</th>
+                                <th>Giá thuê /ngày</th>
+                                <th>Số lượng</th>
+                                <th>Bắt đầu</th>
+                                <th>Kết thúc</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @for (int i = 0; i < gioHang.Count; i++)
+                            {
+                                var item = gioHang[i];
+                                <tr>
+                                    <td><img src="@_context.HinhAnhThietBi.FirstOrDefault(h => h.maThietBi == item.maThietBi)?.hinhAnh" alt="Product Image" width="50"></td>
+                                    <td>@item.ThietBi.tenThietBi</td>
+                                    <td >@item.ThietBi.giaThue</td>
+                                    <td>
+                                        <input type="number" name="ChiTietPhieuDats[@i].soLuongThue" min="1" max="@item.ThietBi.soLuongCon" step="1" value="1" onchange="calculateTotal()">
+                                        <input type="hidden" name="ChiTietPhieuDats[@i].maThietBi" value="@item.ThietBi.maThietBi" />
+                                        <input type="hidden" name="ChiTietPhieuDats[@i].giaThueNgay" value="@item.ThietBi.giaThue" />
+                                    </td>
+                                    <td>
+                                        <input type="date" name="ChiTietPhieuDats[@i].ngayBatDauThue" class="rent_date" value="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="calculateTotal()">
+                                    </td>
+                                    <td>
+                                        <input type="date" name="ChiTietPhieuDats[@i].ngayKetThucThue" class="rent_date" value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" onchange="calculateTotal()">
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="total_price">
+                        <p>Tổng cộng:<span id="total_price">0</span>₫</p>
+                    </div>
+                </div>
+
+                <div class="order_action">
+                    <button type="submit" class="order_button">Hoàn thành</button>
+                </div>
+            </form>
+
+            <div>
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <ul>
+                        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                        {
+                            <li>@error.ErrorMessage</li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateTotal() {
+            let total = 0;
+            const rows = document.querySelectorAll('#products_table tbody tr');
+
+            rows.forEach(row => {
+                const pricePerDay = parseFloat(row.querySelector('td:nth-child(3)').textContent.replace(/,/g, ''));
+                const quantity = parseInt(row.querySelector('input[name*="soLuongThue"]').value);
+                const startDate = new Date(row.querySelector('input[name*="ngayBatDauThue"]').value);
+                const endDate = new Date(row.querySelector('input[name*="ngayKetThucThue"]').value);
+
+                if (!isNaN(pricePerDay) && !isNaN(quantity) && !isNaN(startDate) && !isNaN(endDate)) {
+                    const days = (endDate - startDate) / (1000 * 60 * 60 * 24) + 1;
+                    total += pricePerDay * quantity * days;
+                }
+            });
+
+            const totalPriceElement = document.getElementById('total_price');
+            if (totalPriceElement) {
+                totalPriceElement.innerHTML = total.toLocaleString();
+            } else {
+                console.error('Element with id "total_price" not found');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', calculateTotal);
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', calculateTotal);
+        });
+
+        // Ngăn chặn submit nhiều lần
+        document.getElementById('orderForm').addEventListener('submit', function (e) {
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Đang xử lý...';
+        });
+    </script>
+</main>
+<div class="blur_overlay cart"></div>
+
+<!-- Cart Preview -->
+<div class="cart_previewer">
+    <h3>GIỎ HÀNG</h3>
+    <div class="cart_previewer_products">
+        @await Html.PartialAsync("_CartPreview", gioHang)
+    </div>
+    <button id="order" href="" class="primary-button"><a href="@Url.Action("PhieuDat", "PhieuDat")">TẠO PHIẾU ĐẶT</a></button>
+</div>
+<div class="blur_overlay cart"></div>
+        </div>
+
+<script src="/js/cart.js"></script>
+<script src="/js/delete_cart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function initCartPreviewer() {
+            const bg = document.querySelector('.blur_overlay.cart');
+            const cartButton = document.querySelector('.open_cart_button');
+
+            if (cartButton && bg) {
+                cartButton.addEventListener('click', e => {
+                    document.querySelector('.cart_previewer').classList.add('active');
+                    bg.classList.add('active');
+                });
+
+                function handleClose() {
+                    document.querySelector('.cart_previewer').classList.remove('active');
+                    bg.classList.remove('active');
+                }
+
+                bg.addEventListener('click', handleClose);
+            } else {
+                console.error("Element not found: .open_cart_button or .blur_overlay.cart");
+            }
+        }
+
+        initCartPreviewer();
+    });
+
+</script>

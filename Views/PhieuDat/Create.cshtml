@@ -1,0 +1,82 @@
+﻿@model WebChoThueThietBiXD.ViewModels.PhieuDatModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main_content">
+    <div class="form-container">
+        <div class="title">
+            <a href="~/PhieuDat"><img src="/images/left.png"></a>
+            <h2>Tạo phiếu đặt</h2>
+        </div>
+
+        <form asp-action="Create">
+            <div class="form-group">
+                <label for="maKhachHang">Khách hàng:</label>
+                <select id="maKhachHang" name="maKhachHang">
+                    <option value="">Khách hàng</option>
+                    @foreach (var item in ViewBag.maKhachHang)
+                    {
+                        <option value="@item.Value">@item.Value | @item.Text</option>
+                    }
+                </select>
+                <span asp-validation-for="maKhachHang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="soDienThoaiGiaoHang">Số điện thoại giao:</label>
+                <input type="text" id="soDienThoaiGiaoHang" name="soDienThoaiGiaoHang">
+                <span asp-validation-for="soDienThoaiGiaoHang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Địa chỉ:</label>
+                <div class="select-group" style="width: 70%;">
+                    <div class="select-menu">
+                        <div class="select" id="province" onclick="toggleOptions('provinceOptions')">
+                            <span id="provinceSelected">Tỉnh/Thành Phố</span>
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        </div>
+                        <div class="options-list" id="provinceOptions">
+                            <!-- Add your province options here -->
+                        </div>
+                    </div>
+                    <div class="select-menu">
+                        <div class="select" id="district" onclick="toggleOptions('districtOptions')">
+                            <span id="districtSelected">Quận/Huyện</span>
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        </div>
+                        <div class="options-list" id="districtOptions">
+                            <!-- Add your district options here -->
+                        </div>
+                    </div>
+                    <div class="select-menu">
+                        <div class="select" id="ward" onclick="toggleOptions('wardOptions')">
+                            <span id="wardSelected">Xã/Phường</span>
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        </div>
+                        <div class="options-list" id="wardOptions">
+                            <!-- Add your ward options here -->
+                        </div>
+                    </div>
+                </div>
+                <input type="text" id="soNha" placeholder="Số nhà, đường" style="margin-top:20px;">
+                <span asp-validation-for="diaCHiGiaoHang" class="text-danger"></span>
+                <div class="form-group" hidden>
+                    <input name="diaCHiGiaoHang" class="form-control" id="diaChi" readonly />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="ghiChu">Ghi chú:</label>
+                <textarea id="ghiChu" name="ghiChu"></textarea>
+                <span asp-validation-for="ghiChu" class="text-danger"></span>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Lưu lại</button>
+                <a class="btn-secondary" href="~/PhieuDat">Hủy bỏ</a>
+
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+﻿@model IEnumerable<WebChoThueThietBiXD.Models.DanhMucThietBi>
+@inject WebChoThueThietBiXD.Data.WebChoThueThietBiXDContext _context
+@using System.Security.Claims
+
+@{
+    string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    var userName = User.Identity.Name;
+    var user = _context.TaiKhoan.FirstOrDefault(u => u.tenDangNhap == userName);
+    var gioHang = new List<WebChoThueThietBiXD.Models.GioHang>();
+    if (user != null)
+    {
+        gioHang = _context.GioHang
+            .Where(t => t.maTaiKhoan == user.maTaiKhoan)
+            .ToList();
+    }
+}
+<header class="header">
+    <div class="header_top flex">
+        <div class="header_top_left flex gap--small hide_on_mobile">
+            <i class="fa fa-map-marker" aria-hidden="true"></i>
+            <p>48 Cao Thắng, Hải Châu, Đà Nẵng</p>
+        </div>
+        <div class="header_top_right flex gap--medium">
+            <a href="tel:1900 1020" class="flex gap--small">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <p>1900 1020</p>
+            </a>
+            <a href="mailto:tandtgroup@gmail.com" class="flex gap--small">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <p>tandtgroup@gmail.com</p>
+            </a>
+        </div>
+    </div>
+    <div class="header_center flex">
+        <div class="header_center_left flex gap--medium">
+            <div class="header_logo">
+                <img src="/images/logo1.png" alt="">
+            </div>
+            <a class="hide_on_mobile" href="@Url.Action("Back", "Home")">Trang chủ</a>
+            <a class="hide_on_mobile" href="">Giới thiệu</a>
+            <a class="hide_on_mobile" href="@Url.Action("Category", "Home")">Sản phẩm</a>
+            <a class="hide_on_mobile" href="">Liên hệ</a>
+        </div>
+        <div class="header_center_right  flex gap--medium">
+            <button class="search_icon_button">
+                <img class="image_icon" src="/images/header_search_icon.png" alt="">
+            </button>
+            <button class="flex gap--small open_cart_button">
+                    <span class="header_center_cart_icon">
+                        <img class="image_icon" src="/images/header_cart_icon.png" alt="">
+                        @if (gioHang == null)
+                        {
+                            <sup>0</sup>
+                        }
+                        else
+                        {
+                            <sup>@gioHang.Count</sup>
+                                  
+                        }
+                    </span>
+                    <span class="hide_on_mobile">Giỏ hàng</span>
+                </button>
+            @if (User.Identity.IsAuthenticated)
+            {
+
+                <a href="@Url.Action("Profile", "KhachHang", new { id = user.maTaiKhoan })" class="flex gap--small open_login_form_btn">
+                    <img class="image_icon" src="/images/header_user_icon.png" alt="">
+                    <span class="hide_on_mobile">Xin chào: @User.Identity.Name</span>
+                </a>
+            }
+            else
+            {
+                <button class="flex gap--small open_login_form_btn">
+                    <img class="image_icon" src="/images/header_user_icon.png" alt="">
+                    <span class="hide_on_mobile">Đăng nhập</span>
+                </button>
+            }
+        </div>
+        <form class="header_center_bottom">
+            <img src="/images/header_search_icon.png" alt="" width="24px">
+            <input class="header_center_searchbar" type="text" placeholder="Tìm kiếm sản phẩm" name="" id="">
+        </form>
+    </div>
+    <div class="header_bottom">
+        <ul class="header_bottom_inner flex">
+            @foreach (var danhmuc in Model)
+            {
+                <li class="header_bottom_label">
+                    <a href="@Url.Action("Category", "Home", new { maDM = danhmuc.maDanhMuc })">@danhmuc.tenDanhMuc</a>
+                </li>
+            }
+        </ul>
+    </div>
+</header>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function initCartPreviewer() {
+            const bg = document.querySelector('.blur_overlay.cart');
+            const cartButton = document.querySelector('.open_cart_button');
+
+            if (cartButton && bg) {
+                cartButton.addEventListener('click', e => {
+                    document.querySelector('.cart_previewer').classList.add('active');
+                    bg.classList.add('active');
+                });
+
+                function handleClose() {
+                    document.querySelector('.cart_previewer').classList.remove('active');
+                    bg.classList.remove('active');
+                }
+
+                bg.addEventListener('click', handleClose);
+            } else {
+                console.error("Element not found: .open_cart_button or .blur_overlay.cart");
+            }
+        }
+
+        initCartPreviewer();
+    });
+
+</script>

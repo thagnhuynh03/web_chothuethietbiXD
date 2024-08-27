@@ -1,0 +1,205 @@
+﻿main {
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    margin-top:0 !important;
+}
+
+.main_content {
+    width: 76%;
+    margin-top: 12px;
+    display: flex;
+    gap: 20px;
+}
+
+.nav_user {
+    width: 20%;
+    padding: 20px;
+}
+
+    .nav_user h3 {
+        margin-bottom: 24px;
+        color: #15254d;
+    }
+
+    .nav_user li {
+        list-style: none;
+        padding: 8px 0;
+        margin-left: 16px;
+    }
+
+        .nav_user li a {
+            text-decoration: none;
+            color: #000;
+        }
+
+.header_personal_option li:nth-child(2) a {
+    color: #D10024;
+}
+
+.orders_container {
+    background-color: #fff;
+    width: 80%;
+    padding: 20px 20px;
+    gap: 60px
+}
+
+    .orders_container .filter_nav {
+        display: flex;
+        margin-bottom: 24px;
+    }
+
+.filter_nav li {
+    flex: 1;
+    list-style: none;
+    position: relative;
+}
+
+    .filter_nav li::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 1px;
+        background-color: transparent; /* Màu sắc viền dưới trong suốt ban đầu */
+        transition: background-color 0.3s ease; /* Hiệu ứng màu sắc khi hover */
+    }
+
+    .filter_nav li:hover:after {
+        background-color: #D10024; /* Màu sắc của viền dưới khi hover */
+        height: 2px; /* Độ dày của viền dưới khi hover */
+    }
+
+.filter_nav button {
+    width: 100%;
+    padding: 9px 0;
+    background-color: #fff;
+    border: none;
+    font-weight: 600;
+    color: #545454;
+    font-size: 0.9rem;
+}
+
+/* .filter_nav button:hover {
+    border-bottom: 2px solid #D10024;
+} */
+
+.orders_list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-bottom: 72px;
+}
+
+    .orders_list .order {
+        padding: 20px;
+        border: 1px solid #E4E7ED;
+    }
+
+    .orders_list .order_header {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #c1c1c1;
+        margin-bottom: 32px;
+    }
+
+        .orders_list .order_header .order_code {
+            color: #1E1F29;
+            font-weight: 550;
+        }
+
+    .orders_list .order_content {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        font-size: 0.9rem;
+    }
+
+        .orders_list .order_content .order_product {
+            display: flex;
+            justify-content: space-between;
+            height: 5em;
+            align-items: center;
+        }
+
+
+.order_product .product_name {
+    width:40%;
+}
+
+.order_product .product_rent_date {
+    width: 24%;
+}
+
+.order_product .rent_cost {
+    width: 15%;
+}
+
+
+
+.order_product .product_image {
+    height: 72px;
+    width: 5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .order_product .product_image img {
+        width: 72px;
+        height: auto;
+        object-fit: contain;
+    }
+
+.order_product .product_name {
+    width: 30%;
+    overflow: hidden; 
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.order_product .rent_cost {
+    color: #D10024;
+}
+
+.orders_list .order_footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px
+}
+
+
+    .orders_list .order_footer .cancel_button {
+        padding: 8px 12px;
+        background-color: black;
+        border: none;
+        color: #fff;
+    }
+
+    .orders_list .order_footer .total_price {
+        font-size: 1.2rem;
+        color: #545454;
+    }
+
+        .orders_list .order_footer .total_price span {
+            color: #1E1F29;
+            font-weight: 550;
+        }
+
+.filter_nav li.active::after {
+    background-color: #D10024; /* Màu sắc của viền dưới khi active */
+}
+
+.filter_nav button.active {
+    border-bottom: 2px solid #D10024;
+}
+
+.cancel-button {
+    background-color:#1E1F29;
+    padding: 8px;
+    color:#fff;
+}

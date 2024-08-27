@@ -1,0 +1,77 @@
+﻿@model WebChoThueThietBiXD.Models.PhieuDat
+@{
+    ViewData["Title"] = "DuyetPhieuDat";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main_content">
+    <div class="form-container">
+        <div class="title">
+            <a href="~/PhieuDat"><img src="/images/left.png"></a>
+            <h2>Duyệt phiếu đặt</h2>
+        </div>
+
+        <form asp-action="DuyetPhieuDat">
+            <div class="form-group">
+                <label>Ngày tạo phiếu:</label>
+                <span>@Model.ngayTaoPhieu.ToString("dd-MM-yyyy")</span>
+            </div>
+            <div class="form-group">
+                <label>Trạng thái phiếu đặt:</label>
+                <span>@Model.trangThaiPhieuDat</span>
+            </div>
+            <div class="form-group">
+                <label>Địa chỉ giao hàng:</label>
+                <span>@Model.diaCHiGiaoHang</span>
+            </div>
+            <div class="form-group">
+                <label>Số điện thoại giao hàng:</label>
+                <span>@Model.soDienThoaiGiaoHang</span>
+            </div>
+            <div class="form-group">
+                <label>Ghi chú:</label>
+                <span>@Model.ghiChu</span>
+            </div>
+            <div class="form-group">
+                <label>Khách hàng:</label>
+                <span>@Model.KhachHang.tenKhachHang</span>
+            </div>
+
+            <div class="device-info">
+                <div class="title-and-actions" style="margin-top: 50px;">
+                    <h3>Danh sách phiếu đặt</h3>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tên thiết bị</th>
+                            <th>Số lượng</th>
+                            <th>Giá thuê</th>
+                            <th>Ngày bắt đầu</th>
+                            <th>Ngày kết thúc</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ChiTietPhieuDats)
+                        {
+                            <tr>
+                                <td>@(item.ThietBi != null ? item.ThietBi.tenThietBi : "N/A")</td>
+                                <td>@item.soLuongThue</td>
+                                <td>@item.giaThueNgay.ToString("#,##0.## đ")</td>
+                                <td>@item.ngayBatDauThue.ToString("dd/MM/yyyyy hh:mm tt")</td>
+                                <td>@item.ngayKetThucThue.ToString("dd/MM/yyyyy hh:mm tt")</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-actions">
+                <button type="submit" name="actionType" value="Duyet" class="btn-primary">Duyệt</button>
+                <button type="submit" name="actionType" value="Huy" class="btn-secondary">Hủy bỏ</button>
+
+            </div>
+        </form>
+    </div>
+</div>
+

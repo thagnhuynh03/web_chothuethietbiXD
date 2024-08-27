@@ -1,0 +1,90 @@
+﻿@model WebChoThueThietBiXD.Models.DonHang
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main_content">
+    <div class="form-container">
+        <div class="title">
+            <a href="~/DonHang"><img src="/images/left.png"></a>
+            <h2>Chi tiết đơn hàng</h2>
+        </div>
+
+        <form asp-action="Details">
+            <div class="form-group">
+                <label>Mã đơn hàng:</label>
+                <span>@Model.maDonHang</span>
+            </div>
+            <div class="form-group">
+                <label>Tên khách hàng:</label>
+                <span>@Model.PhieuDat.KhachHang.tenKhachHang</span>
+            </div>
+            <div class="form-group">
+                <label>Trạng thái đơn hàng:</label>
+                <span>@Model.trangThaiDonHang</span>
+            </div>
+            <div class="form-group">
+                <label>Ngày thanh toán:</label>
+                <span>@(Model.ngayThanhToan.HasValue ? Model.ngayThanhToan.Value.ToString("dd/MM/yyyy") : "Chưa thanh toán")</span>
+            </div>
+            <div class="form-group">
+                <label>Ngày giao hàng:</label>
+                <span>@(Model.ngayGiaoHang.HasValue ? Model.ngayGiaoHang.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật ngày giao hàng")</span>
+            </div>
+            <div class="form-group">
+                <label>Nhân viên xử lý đơn hàng:</label>
+                <span>@Model.NhanVien.tenNhanVien</span>
+            </div>
+            <div class="form-group">
+                <label>Địa chỉ giao hàng:</label>
+                <span>@Model.PhieuDat.diaCHiGiaoHang</span>
+            </div>
+            <div class="form-group">
+                <label>Số điện thoại giao hàng:</label>
+                <span>@Model.PhieuDat.soDienThoaiGiaoHang</span>
+            </div>
+            <div class="form-group">
+                <label>Ghi chú:</label>
+                <span>@Model.PhieuDat.ghiChu</span>
+            </div>
+            <div class="device-info">
+                <div class="title-and-actions" style="margin-top: 50px;">
+                    <h3>Danh sách phiếu đặt</h3>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tên thiết bị</th>
+                            <th>Số lượng</th>
+                            <th>Giá thuê</th>
+                            <th>Ngày bắt đầu</th>
+                            <th>Ngày kết thúc</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.PhieuDat.ChiTietPhieuDats)
+                        {
+                            <tr>
+                                <td>@item.ThietBi.tenThietBi</td>
+                                <td>@item.soLuongThue</td>
+                                <td>@item.giaThueNgay.ToString("#,##0.## đ")</td>
+                                <td>@item.ngayBatDauThue.ToString("dd/MM/yyyyy hh:mm tt")</td>
+                                <td>@item.ngayKetThucThue.ToString("dd/MM/yyyyy hh:mm tt")</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group" style="font-size:larger; display:flex; margin-top: 30px;">
+                <label>Tổng tiền:</label>
+                <span>@ViewBag.TongTien.ToString("#,##0.## đ")</span>
+            </div>
+            <div class="form-actions">
+                <a class="btn-secondary" href="~/DonHang">Quay lại</a>
+            </div>
+        </form>
+    </div>
+</div>

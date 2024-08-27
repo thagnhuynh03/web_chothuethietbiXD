@@ -1,0 +1,61 @@
+﻿@model WebChoThueThietBiXD.Models.PhieuDat
+@{
+    ViewData["Title"] = "DeletePhieuDat";
+    Layout = "~/Views/Shared/_StaffLayout.cshtml";
+}
+
+<div class="main_content" style="height: auto; margin-top: 150px; margin-left: 300px; ">
+    <div class="container">
+        <h1>Xóa phiếu đặt</h1>
+
+        <h3>Bạn chắc chắn muốn xóa phiếu đặt này chứ?</h3>
+        <div>
+            <h4>Phiếu đặt: @Model.maPhieuDat</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    Ngày tạo phiếu:
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ngayTaoPhieu)
+                </dd>
+                <dt class="col-sm-2">
+                    Trạng thái phiếu đặt:
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.trangThaiPhieuDat)
+                </dd>
+                <dt class="col-sm-2">
+                    Địa chỉ giao hàng:
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.diaCHiGiaoHang)
+                </dd>
+                <dt class="col-sm-2">
+                    Số điện thoại giao hàng:
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.soDienThoaiGiaoHang)
+                </dd>
+                <dt class="col-sm-2">
+                    Ghi chú: 
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ghiChu)
+                </dd>
+                <dt class="col-sm-2">
+                    Tên khách hàng:
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.KhachHang.tenKhachHang)
+                </dd>
+            </dl>
+
+            <form asp-action="DeletePhieuDat">
+                <input type="hidden" asp-for="maPhieuDat" />
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+                <a href="/PhieuDat/StaffIndex" class="btn btn-secondary">Back to List</a>
+            </form>
+        </div>
+    </div>
+</div>

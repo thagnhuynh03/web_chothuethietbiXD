@@ -1,0 +1,40 @@
+﻿@model IEnumerable<WebChoThueThietBiXD.Models.GioHang>
+@inject WebChoThueThietBiXD.Data.WebChoThueThietBiXDContext _context
+
+@if (Model != null && Model.Any())
+{
+    @foreach (var item in Model)
+    {
+        <div class="cart_previewer_product">
+            @if (item.ThietBi != null)
+            {
+                <div class="cart_previewer_product_img">
+                    @{
+                        var img = item.ThietBi?.HinhAnhThietBis?.FirstOrDefault()?.hinhAnh;
+                        if(img == null)
+                        {
+                            img = _context.HinhAnhThietBi.FirstOrDefault(i => i.maThietBi == item.maThietBi).hinhAnh;
+                        }
+                    }
+                    <img src="@img" alt="Product Image">
+                </div>
+                <div class="cart_previewer_product_info">
+                    <h4>@item.ThietBi.tenThietBi</h4>
+                    <span class="cart_previewer_product_price price">@item.ThietBi.giaThue</span>
+                    <div class="cart_previewer_remove_btn">
+                        <form asp-action="Delete1" asp-controller="GioHang" method="post" class="form_delete_cart">
+                            <input type="hidden" name="maThietBi" value="@item.maThietBi" />
+                            <button type="submit"><img src="/images/close_icon.svg" width="10px" alt="Remove"></button>
+                        </form>
+                    </div>
+                </div>
+               
+            }
+        </div>
+    }
+}
+else
+{
+    <p>Giỏ hàng của bạn đang trống.</p>
+}
+<script src="/js/delete_cart.js"></script>

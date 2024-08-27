@@ -1,0 +1,142 @@
+﻿@model WebChoThueThietBiXD.Models.ThietBi
+@inject WebChoThueThietBiXD.Data.WebChoThueThietBiXDContext _context;
+@using Microsoft.EntityFrameworkCore;
+@{
+    var danhSachSanPhams = ViewData["danhSachSanPhams"] as List<WebChoThueThietBiXD.Models.ThietBi>;
+    var danhsachhinhanh = ViewData["danhsachhinhanh"] as List<WebChoThueThietBiXD.Models.HinhAnhThietBi>;
+    var userName = User.Identity.Name;
+    var user = _context.TaiKhoan.FirstOrDefault(u => u.tenDangNhap == userName);
+    var gioHang = new List<WebChoThueThietBiXD.Models.GioHang>();
+    if (user != null)
+    {
+        gioHang = _context.GioHang
+            .Include(g => g.ThietBi) // Ensure 'Include' is recognized and ThietBi is the correct navigation property
+            .Where(t => t.maTaiKhoan == user.maTaiKhoan)
+            .ToList();
+    }
+}
+@section Head {
+    <link rel="stylesheet" href="/styles/product_detail.css">
+}
+<main>
+        <div class="main_content">
+            <div class="product ">
+                <div class="product_images flex">
+                    <div class="zoom_image">
+                    <img height="100%" src="@Model.HinhAnhThietBis.FirstOrDefault().hinhAnh" class="showed_image">
+
+                    </div>
+
+                    <div class="list_images">
+                        @foreach(var img in Model.HinhAnhThietBis)
+                        {
+                            <img src="@img.hinhAnh" class="image_item">
+                        }
+
+                    </div>
+
+                </div>
+                <div class="product_info">
+                <h2 class="product_name">@Model.tenThietBi</h2>
+                <p class="product_brand">Thương hiệu: <span>@Model.Hang.tenHang</span></p>
+                <p class="product_code">Mã sản phẩm: <span>@Model.maThietBi</span></p>
+                <p class="product_quantity">Số lượng: <span>@Model.soLuongCon</span></p>
+                <p class="product_rent_cost">Giá thuê: <span class="price">@Model.giaThue</span> /ngày</p>
+                   
+                    <div class="product_action flex">
+                        
+                        <button class="add_cart_btn" data-url="@Url.Action("AddToCart", "Home", new { maTB = @Model.maThietBi })">
+                            <a id="Cart_update" data-url='@Url.Action("CartPreview", "Home")'>Thêm vào giỏ hàng</a>
+                        </button>
+                        <button class="order_btn">Xem thêm</button>
+                    </div>
+
+                    <p class="contact">Liên hệ tư vấn và đặt mua: <span>1900 1020</span></p>
+
+                </div>
+
+                <div class="product_description">
+                    <h3>Mô tả</h3>
+                <p>@Model.moTa</p>
+                </div>
+
+            </div>
+
+            <div class="recommended_products">
+                <h3>Sản phẩm liên quan</h3>
+            <div class="list_products">
+
+
+                @foreach (var itemm in danhSachSanPhams.Take(4))
+                {
+                    <div class="product_item">
+                        @foreach (var img in danhsachhinhanh)
+                        {
+                            @if (itemm.maThietBi == img.maThietBi)
+                            {
+                               
+                                <div class="product_img">
+                                    <img src="@img.hinhAnh">
+                                </div>
+                                break;
+                            }
+
+                        }
+                        <p class="product_name">@itemm.tenThietBi</p>
+                        <p class="product_rent_cost"><span>@itemm.giaThue</span>₫ /ngày </p>
+                        <div class="product_action flex">
+                            <button class="add_cart_btn">Thêm vào giỏ</button>
+                            <button class="view_more_btn"><a href="@Url.Action("product_detail", "product_detail", new { id = itemm.maThietBi })">Xem thêm</a></button>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+            </div>
+
+        <div class="blur_overlay cart"></div>
+
+        <!-- Cart Preview -->
+        <div class="cart_previewer">
+            <h3>GIỎ HÀNG</h3>
+            <div class="cart_previewer_products">
+                @await Html.PartialAsync("_CartPreview", gioHang)
+            </div>
+            <button id="order" href="" class="primary-button"><a href="@Url.Action("PhieuDat", "PhieuDat")">TẠO PHIẾU ĐẶT</a></button>
+        </div>
+        <div class="blur_overlay cart"></div>
+        </div>
+    </main>
+<script src="/js/cart.js"></script>
+<script src="/js/delete_cart.js"></script>
+<script src="/js/price_format.js"></script>
+<script src="/js/product_detail.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function initCartPreviewer() {
+            const bg = document.querySelector('.blur_overlay.cart');
+            const cartButton = document.querySelector('.open_cart_button');
+
+            if (cartButton && bg) {
+                cartButton.addEventListener('click', e => {
+                    document.querySelector('.cart_previewer').classList.add('active');
+                    bg.classList.add('active');
+                });
+
+                function handleClose() {
+                    document.querySelector('.cart_previewer').classList.remove('active');
+                    bg.classList.remove('active');
+                }
+
+                bg.addEventListener('click', handleClose);
+            } else {
+                console.error("Element not found: .open_cart_button or .blur_overlay.cart");
+            }
+        }
+
+        initCartPreviewer();
+    });
+
+</script>

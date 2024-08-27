@@ -1,0 +1,201 @@
+﻿@model WebChoThueThietBiXD.Models.KhachHang
+@inject WebChoThueThietBiXD.Data.WebChoThueThietBiXDContext _context
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userName = User.Identity.Name;
+    var user = _context.TaiKhoan.FirstOrDefault(u => u.tenDangNhap == userName);
+    var gioHang = new List<WebChoThueThietBiXD.Models.GioHang>();
+    if (user != null)
+    {
+        gioHang = _context.GioHang
+            .Where(t => t.maTaiKhoan == user.maTaiKhoan)
+            .ToList();
+    }
+}
+
+@section Head {
+    <link rel="stylesheet" href="/styles/user.css">
+}
+
+<main>
+    <div class="main_content">
+        <div class="nav_user">
+            <h3 class="header_personal_page">Trang cá nhân</h3>
+            <ul class="header_personal_option">
+                <li><a href="@Url.Action("Profile", "KhachHang", new { id = user?.maTaiKhoan })">Thông tin cá nhân</a></li>
+                @if (Model == null || Model.maKhachHang == 0) { 
+                    <li><a href="">Đơn hàng</a></li>}
+                else{
+                    <li><a href="@Url.Action("Orders", "KhachHang")">Đơn hàng</a></li>}
+                <li><a href="/Home/Logout">Đăng xuất</a></li>
+            </ul>
+        </div>
+        <div class="infor_user flex_col">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    <strong>@TempData["SuccessMessage"]</strong>
+                </div>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-warning">
+                    <strong>@TempData["Error"]</strong>
+                </div>
+            }
+            @if (Model == null || Model.maKhachHang == 0)
+            {
+                <form asp-action="CreateKhachHang" method="post">
+                    <input type="hidden" name="maTaiKhoan" value="@user?.maTaiKhoan" />
+                    <div class="personal_infor flex_col">
+                        <p class="infor_title">THÔNG TIN CÁ NHÂN</p>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="input_infor personal_infor_name">
+                            <label for="name">Họ và tên</label>
+                            <input type="text" id="name" name="tenKhachHang" placeholder="Họ và tên" class="form-control">
+                        </div>
+                        <div class="input_infor personal_infor_email">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="Email" placeholder="Email" class="form-control">
+                        </div>
+                        <div class="input_infor personal_infor_phone">
+                            <label for="phone">Số điện thoại</label>
+                            <input type="tel" id="phone" name="soDienThoai" placeholder="Số điện thoại" class="form-control">
+                        </div>
+                        <div class="input_infor personal_infor_phone">
+                            <label for="ngaySinh">Ngày sinh</label>
+                            <input type="date" id="ngaySinh" name="ngaySinh" placeholder="Ngày sinh" class="form-control">
+                        </div>
+                        <div class="select-group">
+                            <div class="select-menu">
+                                <div class="select" id="province" onclick="toggleOptions('provinceOptions')">
+                                    <span id="provinceSelected">Tỉnh/Thành Phố</span>
+                                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                </div>
+                                <div class="options-list" id="provinceOptions">
+                                    <!-- Add your province options here -->
+                                </div>
+                            </div>
+                            <div class="select-menu">
+                                <div class="select" id="district" onclick="toggleOptions('districtOptions')">
+                                    <span id="districtSelected">Quận/Huyện</span>
+                                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                </div>
+                                <div class="options-list" id="districtOptions">
+                                    <!-- Add your district options here -->
+                                </div>
+                            </div>
+                            <div class="select-menu">
+                                <div class="select" id="ward" onclick="toggleOptions('wardOptions')">
+                                    <span id="wardSelected">Xã/Phường</span>
+                                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                </div>
+                                <div class="options-list" id="wardOptions">
+                                    <!-- Add your ward options here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="width: 100%;">
+                            <label class="control-label">Số nhà/thôn</label>
+                            <input class="form-control" id="soNha" />
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="input_infor personal_infor_address">
+                            <label for="address">Địa chỉ</label>
+                            <input type="text" id="diaChi" name="diaChi" placeholder="Địa chỉ" class="form-control">
+                        </div>
+                    </div>
+                    <div class="update">
+                        <button type="submit" class="update_button">Thêm thông tin</button>
+                    </div>
+                </form>
+            }
+            else
+            {
+                <form asp-action="UpdateProfile" method="post">
+                    <input type="hidden" asp-for="maTaiKhoan" />
+                    <div class="personal_infor flex_col">
+                        <p class="infor_title">THÔNG TIN CÁ NHÂN</p>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="input_infor personal_infor_name">
+                            <label for="name">Họ và tên</label>
+                            <input type="text" id="name" asp-for="tenKhachHang" placeholder="Họ và tên" class="form-control">
+                        </div>
+                        <div class="input_infor personal_infor_email">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" asp-for="Email" placeholder="Email" class="form-control">
+                        </div>
+                        <div class="input_infor personal_infor_phone">
+                            <label for="phone">Số điện thoại</label>
+                            <input type="tel" id="phone" asp-for="soDienThoai" placeholder="Số điện thoại" class="form-control">
+                        </div>
+                        <div class="input_infor personal_infor_address">
+                            <label for="address">Địa chỉ</label>
+                            <input type="text" id="address" asp-for="diaChi" placeholder="Địa chỉ" class="form-control">
+                        </div>
+                    </div>
+                    <div class="change_password flex_col">
+                        <p class="infor_title change_password_text">THAY ĐỔI MẬT KHẨU</p>
+                        <div class="input_infor personal_current_pass">
+                            <label for="current_pass">Mật khẩu hiện tại</label>
+                            <input type="password" id="current_pass" name="currentPassword" placeholder="Mật khẩu hiện tại" class="form-control">
+                        </div>
+                        <div class="input_infor personal_new_pass">
+                            <label for="new_pass">Mật khẩu mới</label>
+                            <input type="password" id="new_pass" name="newPassword" placeholder="Mật khẩu mới" class="form-control">
+                        </div>
+                        <div class="input_infor personal_define_pass">
+                            <label for="define_pass">Xác nhận mật khẩu mới</label>
+                            <input type="password" id="define_pass" name="confirmPassword" placeholder="Xác nhận mật khẩu mới" class="form-control">
+                        </div>
+                    </div>
+                    <div class="update">
+                        <button type="submit" class="update_button">Cập nhật</button>
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+</main>
+
+<div class="blur_overlay cart"></div>
+
+<!-- Cart Preview -->
+<div class="cart_previewer">
+    <h3>GIỎ HÀNG</h3>
+    <div class="cart_previewer_products">
+        @await Html.PartialAsync("_CartPreview", gioHang)
+    </div>
+    <button id="order" href="" class="create_pd primary-button"><a href="@Url.Action("PhieuDat", "PhieuDat")">TẠO PHIẾU ĐẶT</a></button>
+</div>
+<div class="blur_overlay cart"></div>
+<script src="/js/cart.js"></script>
+<script src="/js/delete_cart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function initCartPreviewer() {
+            const bg = document.querySelector('.blur_overlay.cart');
+            const cartButton = document.querySelector('.open_cart_button');
+
+            if (cartButton && bg) {
+                cartButton.addEventListener('click', e => {
+                    document.querySelector('.cart_previewer').classList.add('active');
+                    bg.classList.add('active');
+                });
+
+                function handleClose() {
+                    document.querySelector('.cart_previewer').classList.remove('active');
+                    bg.classList.remove('active');
+                }
+
+                bg.addEventListener('click', handleClose);
+            } else {
+                console.error("Element not found: .open_cart_button or .blur_overlay.cart");
+            }
+        }
+
+        initCartPreviewer();
+    });
+
+</script>

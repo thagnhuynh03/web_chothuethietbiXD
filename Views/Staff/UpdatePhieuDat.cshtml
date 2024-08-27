@@ -1,0 +1,82 @@
+﻿@model WebChoThueThietBiXD.ViewModels.PhieuDatViewModel
+@{ ViewData["Title"] = "UpdatePhieuDat";
+    Layout = "~/Views/Shared/_StaffLayout.cshtml"; }
+
+<div class="main_content" style="height: auto; margin-top: 150px; margin-left: 300px;">
+    <div class="container">
+        <h1>Cập nhật phiếu đặt</h1>
+
+        <hr />
+        <form asp-controller="Staff" asp-action="UpdatePhieuDat" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Thông tin phiếu đặt</h4>
+                    <div class="form-group">
+                        <label asp-for="ngayTaoPhieu" class="control-label">Ngày tạo phiếu</label>
+                        <input asp-for="ngayTaoPhieu" class="form-control" />
+                        <span asp-validation-for="ngayTaoPhieu" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label asp-for="trangThaiPhieuDat" class="control-label"></label>
+                        <input asp-for="trangThaiPhieuDat" class="form-control" />
+                        <span asp-validation-for="trangThaiPhieuDat" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="diaChiGiaoHang" class="control-label">Địa chỉ giao hàng</label>
+                        <input asp-for="diaChiGiaoHang" class="form-control" />
+                        <span asp-validation-for="diaChiGiaoHang" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="soDienThoaiGiaoHang" class="control-label">Số điện thoại giao hàng</label>
+                        <input asp-for="soDienThoaiGiaoHang" class="form-control" />
+                        <span asp-validation-for="soDienThoaiGiaoHang" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ghiChu" class="control-label">Ghi chú</label>
+                        <input asp-for="ghiChu" class="form-control" />
+                        <span asp-validation-for="ghiChu" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="maKhachHang" class="control-label">Tên khách hàng</label>
+                        <select asp-for="maKhachHang" class="form-control" asp-items="Model.KhachHangs"></select>
+                        <span asp-validation-for="maKhachHang" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6" hidden>
+                    <h4>Thông tin chi tiết phiếu đặt</h4>
+                    <div class="form-group">
+                        <label asp-for="soLuongThue" class="control-label">Số lượng thuê</label>
+                        <input asp-for="soLuongThue" class="form-control" />
+                        <span asp-validation-for="soLuongThue" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="giaThueNgay" class="control-label">Giá thuê theo ngày</label>
+                        <input asp-for="giaThueNgay" class="form-control" />
+                        <span asp-validation-for="giaThueNgay" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ngayBatDauThue" class="control-label">Ngày bắt đầu thuê</label>
+                        <input asp-for="ngayBatDauThue" class="form-control" />
+                        <span asp-validation-for="ngayBatDauThue" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ngayKetThucThue" class="control-label">Ngày kết thúc thuê</label>
+                        <input asp-for="ngayKetThucThue" class="form-control" />
+                        <span asp-validation-for="ngayKetThucThue" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="maThietBi" class="control-label">Thiết bị muốn thuê</label>
+                        <select asp-for="maThietBi" class="form-control" asp-items="Model.ThietBis"></select>
+                        <span asp-validation-for="maThietBi" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" style="width:35%">
+                <input type="submit" value="Update" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

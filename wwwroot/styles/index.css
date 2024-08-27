@@ -1,0 +1,326 @@
+.space {
+    margin-bottom: 72px;
+}
+
+.width_76 {
+    width: 76%;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10em;
+}
+
+.banner {
+    background-image: url(/images/background.png);
+    height: 382px;
+    background-position: 50% 57.7px;
+    background-attachment: fixed;
+    color: #fff;
+    justify-content: center;
+}
+
+.hero_wrap {
+    width: 100%;
+    height: 700px;
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+
+.banner .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    opacity: .5;
+    background: #0c041e;
+}
+
+.banner_container {
+    position: relative;
+    width: 100%;
+    padding: 0.5em max(1em, 12vw);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+    /* .slogan {
+    top: 30%;
+    left: 50%;
+    flex-direction: column;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 36px;
+    font-weight: 700;
+} */
+    .banner_container .slogan {
+        text-transform: uppercase;
+        font-size: 60px;
+        font-weight: 700;
+    }
+
+    .banner_container .content {
+        font-size: 17px;
+        font-weight: 500;
+        color: #ffffffcc;
+    }
+
+    .banner_container button {
+        font-size: 14px;
+        text-transform: uppercase;
+        font-weight: 600;
+        padding: 0.375rem 0.75rem;
+        border-radius: 5px;
+        border: none;
+    }
+
+.learn_more_button {
+    background-color: #D10024;
+    color: #fff;
+}
+
+
+/* .slogan span {
+    font-weight: 600;
+    font-size: 4rem;
+} */
+
+.introduction {
+    width: 100%;
+    padding: 0.5em max(1em, 12vw);
+    position: absolute;
+    top: 20em;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+}
+
+    .introduction .intr_box {
+        width: 33.333%;
+        padding: 44px 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .introduction .intr_box h4 {
+            text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+
+        .introduction .intr_box h5 {
+            text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+
+        .introduction .intr_box p {
+            font-size: 0.8rem;
+            letter-spacing: 0.7px;
+        }
+
+    .introduction .welcome_box,
+    .introduction .introduce_service_box {
+        background-color: #15161D;
+    }
+
+    .introduction .introduce_product_box {
+        background-color: #D10024;
+    }
+
+    .introduction .intr_box::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 64%;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.15);
+        transform: skewX(-13deg);
+        transform-origin: top left;
+    }
+
+.about_us {
+    padding: 0.5em max(1em, 12vw);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+    .about_us .about_us_image {
+        background-image: url(/images/about_us_img.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        position: relative;
+    }
+
+        .about_us .about_us_image::after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            content: '';
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 120px 120px 0 0;
+            border-color: #D10024 transparent transparent transparent;
+        }
+
+    .about_us .about_us_content {
+        padding: 3rem 0 3rem 3rem;
+    }
+
+        .about_us .about_us_content span {
+            font-size: 12px;
+            display: block;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            color: #D10024;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .about_us .about_us_content h2 {
+            line-height: 1.2;
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .about_us .about_us_content p {
+            font-size: 16px;
+            color: #999999;
+            font-weight: 500;
+            line-height: 1.8;
+        }
+
+        .about_us .about_us_content button {
+            border: none;
+            padding: 12px;
+            float: right;
+        }
+
+.promotional_products {
+    background-color: #ffffff;
+    padding-bottom: 72px;
+}
+
+.products_list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 80px 20px;
+}
+
+.product_container {
+    padding: 0.5em max(1em, 12vw);
+}
+
+    .product_container h2 {
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #2B2D42;
+        margin-bottom: 32px;
+    }
+
+.support {
+    display: flex;
+    gap: 12px;
+    padding: 0.5em max(1em, 12vw);
+    width: 100%;
+}
+
+.support_form_container {
+    width: 66.66666%;
+    background-color: #f8f9fa;
+    padding: 3rem;
+}
+
+.support_heading h4 {
+    color: #15161D;
+    font-size: 2rem;
+    padding-bottom: 0.5em;
+    text-align: center;
+}
+
+.support .support_form {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 3em;
+    row-gap: 1.5em;
+    align-content: center;
+}
+
+.support_form input[type="text"],
+.support_form textarea {
+    line-height: 1.5;
+    padding: 0.7em;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-family: "Montserrat", sans-serif;
+    resize: none;
+}
+
+.support_form * {
+    height: max-content;
+}
+
+.support_email,
+.support_content,
+.support_heading {
+    grid-column: 1 / span 2;
+}
+
+.support .primary-button {
+    padding: 0.5em;
+    background-color: #D10024;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 1px 10px #0000002a;
+    justify-self: left;
+    padding: 1em;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.support_infor {
+    width: 33.33333%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+.support_infor_row {
+    display: flex;
+    gap: 12px;
+}
+
+    .support_infor_row .icon {
+        height: 50px;
+        width: 50px;
+        background: rgba(0, 0, 0, 0.05);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #D10024;
+    }
+
+    .support_infor_row .text {
+        color: #999999;
+    }
+
+        .support_infor_row .text span {
+            display: block;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 0.8em;
+        }

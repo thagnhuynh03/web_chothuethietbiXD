@@ -1,0 +1,43 @@
+﻿@model WebChoThueThietBiXD.Models.ChiTietPhieuDat
+@{
+    ViewData["Title"] = "CreateChiTietPhieuDat";
+    Layout = "~/Views/Shared/_StaffLayout.cshtml";
+}
+
+<div class="main_content" style="height: auto; margin-top: 150px; margin-left: 300px;">
+    <div class="container">
+        <h1>Thêm chi tiết phiếu đặt</h1>
+
+        <form  asp-action="CreateChiTietPhieuDat">
+            <div class="form-group">
+                <label asp-for="soLuongThue" class="control-label">Số lượng muốn thuê</label>
+                <input asp-for="soLuongThue" class="form-control" />
+                <span asp-validation-for="soLuongThue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="giaThueNgay" class="control-label">Giá thuê theo ngày</label>
+                <input asp-for="giaThueNgay" class="form-control" />
+                <span asp-validation-for="giaThueNgay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ngayBatDauThue" class="control-label">Ngày bắt đầu thuê</label>
+                <input asp-for="ngayBatDauThue" id="ngayBatDau" class="form-control" />
+                <span asp-validation-for="ngayBatDauThue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ngayKetThucThue" class="control-label">Ngày kết thúc thuê</label>
+                <input asp-for="ngayKetThucThue" id="ngayKetThuc" class="form-control" />
+                <span asp-validation-for="ngayKetThucThue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="maThietBi" class="control-label">Thiết bị muốn thuê</label>
+                <select asp-for="maThietBi" class="form-control" asp-items="ViewBag.maThietBi"></select>
+                <span asp-validation-for="maThietBi" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="maPhieuDat" />
+            <div class="form-group">
+                <input type="submit" value="Thêm" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

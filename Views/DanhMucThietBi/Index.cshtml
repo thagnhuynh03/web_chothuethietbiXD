@@ -1,0 +1,46 @@
+﻿@model IEnumerable<WebChoThueThietBiXD.Models.DanhMucThietBi>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    a {
+        text-decoration: none; /* Loại bỏ dấu gạch dưới */
+        color: #007bff; /* Tùy chỉnh màu sắc của liên kết */
+    }
+        a:hover {
+            text-decoration: underline; /* Thêm dấu gạch dưới khi di chuột qua */
+        }
+</style>
+<div class="main_content">
+<h1>Quản Lý Danh Mục Thiết Bị</h1>
+<p>
+    <a asp-action="Create">Tạo Danh mục mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Tên Danh mục
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tenDanhMuc)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.maDanhMuc">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.maDanhMuc">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.maDanhMuc">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>

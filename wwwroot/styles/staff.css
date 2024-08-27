@@ -1,0 +1,33 @@
+.white-line {
+    color: white;
+    margin-top: 0;
+    opacity: 1;
+}
+
+.btn-add-oderStick{
+    float: right;
+    margin: 0 8px;
+    background-color: #00ff45;
+    color: white;
+    border: none;
+    padding: 12px;
+}
+
+.header-search{
+    padding: 12px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}

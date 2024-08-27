@@ -1,0 +1,96 @@
+
+.product_item {
+    background-color: #ffffff;
+    padding: 12px 12px 60px;
+    box-sizing: content-box;
+    position: relative;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #E4E7ED;
+}
+
+    .product_item .product_img {
+        height: 13em;
+        width: 94%;
+        margin-bottom: 12px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .product_item .product_img img {
+            height: auto;
+            width: 100%;
+            object-fit: cover;
+        }
+
+    .product_item .product_name {
+        font-size: 14px;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-top: 16px;
+        color: #2B2D42;
+        text-align: center; /* Căn giữa nội dung */
+        overflow: hidden; /* Ẩn phần dư thừa nếu có */
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Số dòng tối đa hiển thị */
+        -webkit-box-orient: vertical;
+    }
+
+    .product_item .product_rent_cost {
+        position: absolute;
+        bottom: 32px;
+        color: #8D99AE;
+    }
+
+        .product_item .product_rent_cost span {
+            color: #D10024;
+            font-weight: 700;
+            font-size: 18px;
+            margin-right: 5px;
+        }
+
+    .product_item .product_action {
+        background-color: #1e1f29;
+        padding: 16px;
+        font-size: 0.9rem;
+        justify-content: space-between;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        transform: translateY(-100%); /* Bắt đầu ẩn .product_action */
+        transition: transform 0.3s ease, opacity 0.3s ease; /* Hiệu ứng chuyển động */
+        opacity: 0;
+        z-index: 100;
+    }
+
+    .product_item:hover .product_action {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .product_item:hover {
+        outline: 2px solid #D10024;
+    }
+
+    .product_item .add_cart_btn {
+        width: 50%;
+        padding: 8px 0;
+        background-color: #ffffff;
+        border: solid 1px #000;
+        cursor: pointer;
+        border: none;
+    }
+
+    .product_item .view_more_btn {
+        width: 45%;
+        padding: 8px 0;
+        background-color: #D10024;
+        border: none;
+        color: #ffffff;
+        cursor: pointer;
+    }

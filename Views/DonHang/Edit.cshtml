@@ -1,0 +1,46 @@
+﻿@model WebChoThueThietBiXD.Models.DonHang
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main_content">
+    <div class="form-container">
+        <div class="title">
+            <a href="~/DonHang"><img src="/images/left.png"></a>
+            <h2>Cập nhật đơn hàng</h2>
+        </div>
+        <form asp-action="Edit">
+            <div class="form-group hidden">
+                <label for="maDonHang">Mã dơn hàng:</label>
+                <input id="maDonHang" name="maDonHang" asp-for="maDonHang" readonly>
+            </div>
+            <div class="form-group">
+                <label for="trangThaiDonHang">Trạng thái đơn hàng:</label>
+                <select id="trangThaiDonHang" name="trangThaiDonHang" asp-for="trangThaiDonHang">
+                    <option value="">Trạng thái đơn hàng</option>
+                    <option value="Đang xử lý">Đang xử lý</option>
+                    <option value="Đang giao">Đang giao</option>
+                    <option value="Đã giao">Đã giao</option>
+                </select>
+                <span asp-validation-for="trangThaiDonHang" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="width: 20%;">
+                <label for="ngayThanhToan">Ngày thanh toán:</label>
+                <input type="date" id="ngayThanhToan" name="ngayThanhToan" asp-for="ngayThanhToan">
+            </div>
+            <div class="form-group" style="width: 20%;">
+                <label for="ngayGiaoHang">Ngày giao hàng:</label>
+                <input type="date" id="ngayGiaoHang" name="ngayGiaoHang" asp-for="ngayGiaoHang">
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Lưu lại</button>
+                <a href="~/DonHang" class="btn-secondary">Hủy bỏ</a>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+

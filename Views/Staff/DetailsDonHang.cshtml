@@ -1,0 +1,78 @@
+﻿@model WebChoThueThietBiXD.ViewModels.DonHangDetailsViewModel
+@{
+    ViewData["Title"] = "DetailsDonHang";
+    Layout = "~/Views/Shared/_StaffLayout.cshtml";
+}
+
+<div class="main_content" style="height: auto; margin-top: 150px; margin-left: 300px;">
+    <div class="container">
+        <h1>Chi tiết phiếu đặt</h1>
+
+        <div class="card">
+            <div class="card-header">
+                Thông tin phiếu đặt
+            </div>
+            <div class="card-body">
+                <p>Mã phiếu đặt: @Model.PhieuDat.maPhieuDat</p>
+                <p>Ngày tạo phiếu: @Model.PhieuDat.ngayTaoPhieu.ToString("yyyy-MM-dd")</p>
+                <p>Trạng thái phiếu đặt: @Model.PhieuDat.trangThaiPhieuDat</p>
+                <p>Địa chỉ giao hàng: @Model.PhieuDat.diaCHiGiaoHang</p>
+                <p>Số điện thoại giao hàng: @Model.PhieuDat.soDienThoaiGiaoHang</p>
+                <p>Ghi chú: @Model.PhieuDat.ghiChu</p>
+                <p>Khách hàng: @Model.PhieuDat.KhachHang.tenKhachHang</p>
+            </div>
+        </div>
+
+        <h2>Thông tin thiết bị đang đặt thuê</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Thiết bị</th>
+                    <th>Số lượng thuê</th>
+                    <th>Giá thuê ngày</th>
+                    <th>Ngày bắt đầu thuê</th>
+                    <th>Ngày kết thúc thuê</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var chiTiet in Model.ChiTietPhieuDats)
+                {
+                    <tr>
+                        <td>@chiTiet.ThietBi.tenThietBi</td>
+                        <td>@chiTiet.soLuongThue</td>
+                        <td>@chiTiet.giaThueNgay</td>
+                        <td>@chiTiet.ngayBatDauThue.ToString("yyyy-MM-dd")</td>
+                        <td>@chiTiet.ngayKetThucThue.ToString("yyyy-MM-dd")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h2>Đơn hàng</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Mã đơn hàng</th>
+                    <th>Trạng thái đơn hàng</th>
+                    <th>Ngày thanh toán</th>
+                    <th>Ngày giao hàng</th>
+                    <th>Nhân viên phụ trách</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var donHang in Model.DonHangs)
+                {
+                    <tr>
+                        <td>@donHang.maDonHang</td>
+                        <td>@donHang.trangThaiDonHang</td>
+                        <td>@donHang.ngayThanhToan?.ToString("yyyy-MM-dd")</td>
+                        <td>@donHang.ngayGiaoHang?.ToString("yyyy-MM-dd")</td>
+                        <td>@donHang.NhanVien.tenNhanVien</td>
+                        <td style="display: flex; justify-content: center;"><a href="@Url.Action("UpdateDonHang", "Staff", new { maDonHang = donHang.maDonHang })" class="btn btn-primary">Cập nhật đơn hàng</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

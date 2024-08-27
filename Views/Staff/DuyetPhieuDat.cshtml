@@ -1,0 +1,71 @@
+﻿@model IEnumerable<WebChoThueThietBiXD.Models.PhieuDat>
+
+@{
+    ViewData["Title"] = "DuyetPhieuDat";
+    Layout = "~/Views/Shared/_StaffLayout.cshtml";
+}
+
+<div class="main_content" style="height: auto; margin-top: 150px; margin-left: 300px;">
+    <div class="container">
+        <h1>Duyệt phiếu đặt</h1>
+        <hr>
+        <div class="btn-group" role="group" aria-label="Order status filter">
+            <a class="btn btn-primary" href="@Url.Action("DuyetPhieuDat", new { status = "ChuaXacNhan" })">Phiếu đặt</a>
+            <a class="btn btn-success" href="@Url.Action("DuyetPhieuDat", new { status = "DaXacNhan" })">Đã duyệt</a>
+            <a class="btn btn-danger" href="@Url.Action("DuyetPhieuDat", new { status = "DaHuy" })">Đã hủy</a>
+        </div>
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th>Ngày tạo phiếu</th>
+                    <th>Trạng thái phiếu đặt</th>
+                    <th>Địa chỉ giao hàng</th>
+                    <th>Số điện thoại giao hàng</th>
+                    <th>Ghi chú</th>
+                    <th>Tên khách hàng</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ngayTaoPhieu.ToString("yyyy-MM-dd")</td>
+                        <td>@item.trangThaiPhieuDat</td>
+                        <td>@item.diaCHiGiaoHang</td>
+                        <td>@item.soDienThoaiGiaoHang</td>
+                        <td>@item.ghiChu</td>
+                        <td>@item.KhachHang?.tenKhachHang</td>
+                        <td>
+                            @if (item.trangThaiPhieuDat == "Chưa xác nhận")
+                            {
+                                <form asp-action="UpdateOrderStatus" method="post" style="display:inline;">
+                                    <input type="hidden" name="id" value="@item.maPhieuDat" />
+                                    <input type="hidden" name="action" value="confirm" />
+                                    <button type="submit" class="btn btn-success">Xác nhận</button>
+                                </form>
+                                <form asp-action="UpdateOrderStatus" method="post" style="display:inline;">
+                                    <input type="hidden" name="id" value="@item.maPhieuDat" />
+                                    <input type="hidden" name="action" value="cancel" />
+                                    <button type="submit" class="btn btn-danger">Hủy</button>
+                                </form>
+                            }
+                            else if (item.trangThaiPhieuDat == "Đã xác nhận" || item.trangThaiPhieuDat == "Đã hủy")
+                            {
+                                <form asp-action="UpdateOrderStatus" method="post" style="display:inline;">
+                                    <input type="hidden" name="id" value="@item.maPhieuDat" />
+                                    <input type="hidden" name="action" value="undo" />
+                                    <button type="submit" class="btn btn-warning">Hoàn tác</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <span>-</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

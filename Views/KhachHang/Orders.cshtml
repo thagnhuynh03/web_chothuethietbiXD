@@ -1,0 +1,139 @@
+﻿@model List<WebChoThueThietBiXD.Models.PhieuDat>
+@inject WebChoThueThietBiXD.Data.WebChoThueThietBiXDContext _context
+@{
+    ViewData["Title"] = "Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var state = ViewBag.state as string;
+    var userName = User.Identity.Name;
+    var user = _context.TaiKhoan.FirstOrDefault(u => u.tenDangNhap == userName);
+    var gioHang = new List<WebChoThueThietBiXD.Models.GioHang>();
+    if (user != null)
+    {
+        gioHang = _context.GioHang
+            .Where(t => t.maTaiKhoan == user.maTaiKhoan)
+            .ToList();
+    }
+}
+@section Head {
+    <link rel="stylesheet" href="/styles/order_list.css">
+}
+<main>
+    <div class="main_content">
+        <div class="nav_user">
+            <h3 class="header_personal_page">Trang cá nhân</h3>
+            <ul class="header_personal_option">
+                <li><a href="@Url.Action("Profile", "KhachHang", new { id = user.maTaiKhoan })">Thông tin cá nhân</a></li>
+                <li><a href="@Url.Action("Orders", "KhachHang")">Đơn hàng</a></li>
+                <li><a href="/Home/Logout">Đăng xuất</a></li>
+            </ul>
+        </div>
+
+        <div class="orders_container">
+            <div class="filter_nav">
+                <li><button onclick="applyState('all')" @(state == "all" ? "class=active" : "")>TẤT CẢ</button></li>
+                <li><button onclick="applyState('orders')" @(state == "orders" ? "class=active" : "")>PHIẾU ĐẶT</button></li>
+                <li><button onclick="applyState('processing')" @(state == "processing" ? "class= active" : "")>ĐANG XỬ LÝ</button></li>
+                <li><button onclick="applyState('delivering')" @(state == "delivering" ? "class=active" : "")>ĐANG GIAO</button></li>
+                <li><button onclick="applyState('delivered')" @(state == "delivered" ? "class=active" : "")>ĐÃ GIAO</button></li>
+                <li><button onclick="applyState('cancelled')" @(state == "cancelled" ? "class=active" : "")>ĐÃ HỦY</button></li>
+            </div>
+
+            <div class="orders_list">
+                @foreach (var order in Model)
+                {
+                    <div class="order">
+                        <div class="order_header">
+                            <p class="order_code">
+                                Phiếu đặt: <span>@order.maPhieuDat</span>
+                            </p>
+                            <p class="products_quantity">
+                                <span>@order.ChiTietPhieuDats.Count</span> sản phẩm
+                            </p>
+                        </div>
+
+                        <div class="order_content">
+                            @foreach (var chiTiet in order.ChiTietPhieuDats)
+                            {
+                                <div class="order_product">
+                                    <div class="product_image">
+                                        @{
+                                            var img = _context.HinhAnhThietBi.Where(h => h.maThietBi == chiTiet.maThietBi).FirstOrDefault().hinhAnh;
+                                        }
+
+                                        <img src="@img" alt="@chiTiet.ThietBi.tenThietBi">
+                                    </div>
+                                    <p class="product_name">@chiTiet.ThietBi.tenThietBi</p>
+                                    <p class="rent_cost price">@chiTiet.giaThueNgay</p>
+                                    <p class="product_quantity">@chiTiet.soLuongThue</p>
+                                    <p class="product_rent_date">@chiTiet.ngayBatDauThue.ToString("dd/MM/yyyy") - @chiTiet.ngayKetThucThue.ToString("dd/MM/yyyy")</p>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="order_footer">
+                            <p class="total_price">Tổng cộng: <span class="price">@order.ChiTietPhieuDats.Sum(ct => ct.giaThueNgay * ct.soLuongThue)</span></p>
+                            @if (order.trangThaiPhieuDat == "Chưa xác nhận")
+                            {
+                                <form method="post" action="@Url.Action("CancelOrder", "KhachHang", new { id = order.maPhieuDat })">
+                                    <button class="cancel-button" type="submit">Hủy đơn</button>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</main>
+<div class="blur_overlay cart"></div>
+
+<!-- Cart Preview -->
+<div class="cart_previewer">
+    <h3>GIỎ HÀNG</h3>
+    <div class="cart_previewer_products">
+        @await Html.PartialAsync("_CartPreview", gioHang)
+    </div>
+    <button id="order" href="" class="create_pd primary-button"><a href="@Url.Action("PhieuDat", "PhieuDat")">TẠO PHIẾU ĐẶT</a></button>
+</div>
+<div class="blur_overlay cart"></div>
+        </div>
+    </main>
+<script src="/js/cart.js"></script>
+<script src="/js/delete_cart.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function initCartPreviewer() {
+            const bg = document.querySelector('.blur_overlay.cart');
+            const cartButton = document.querySelector('.open_cart_button');
+
+            if (cartButton && bg) {
+                cartButton.addEventListener('click', e => {
+                    document.querySelector('.cart_previewer').classList.add('active');
+                    bg.classList.add('active');
+                });
+
+                function handleClose() {
+                    document.querySelector('.cart_previewer').classList.remove('active');
+                    bg.classList.remove('active');
+                }
+
+                bg.addEventListener('click', handleClose);
+            } else {
+                console.error("Element not found: .open_cart_button or .blur_overlay.cart");
+            }
+        }
+
+        initCartPreviewer();
+    });
+
+</script>
+
+
+<script>
+    function applyState(state) {
+        var url = '@Url.Action("Orders", "KhachHang")' + '?state=' + state;
+        window.location.href = url;
+    }
+</script>
+

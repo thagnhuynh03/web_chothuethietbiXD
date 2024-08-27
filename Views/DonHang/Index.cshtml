@@ -1,0 +1,87 @@
+﻿@model IEnumerable<WebChoThueThietBiXD.Models.DonHang>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main_content">
+    <div class="title-and-actions">
+        <h2>Danh sách đơn hàng</h2>
+    </div>
+    <div class="search-container">
+        <form asp-controller="DonHang" asp-action="Search">
+            <input type="text" class="search-input" id="txtSearch" name="query" placeholder="Tìm kiếm theo mã thiết bị hoặc tên">
+            <button type="submit" id="btnSearch" style="display:none;">Search</button>
+        </form>
+        <button class="filter-btn" onclick="toggleDropdown()">
+            <img src="/images/filter.png" class="icon">
+            <span>Lọc</span>
+        </button>
+    </div>
+    <form asp-controller="DonHang" asp-action="Filter">
+        <div id="dropdown-filter" class="dropdown-filter-content">
+            <select id="maDanhMuc" name="trangThai" onchange="this.form.submit()" class="dropdown-filter-item">
+                <option value="">Trạng thái</option>
+                <option value="Đang xử lý">Đang xử lý</option>
+                <option value="Đang giao">Đang giao</option>
+                <option value="Đã giao">Đã giao</option>
+            </select>
+            <div style="margin-left:20px;">
+                <label style="font-size:13px;">Thời gian thanh toán</label>
+                <div>
+                    <input type="date" name="start_thanhToan" class="dropdown-filter-item">
+                    <input type="date" name="end_thanhToan" onchange="this.form.submit()" class="dropdown-filter-item">
+                </div>
+                
+            </div>
+            <div style="margin-left:20px;">
+                <label style="font-size:13px;">Thời gian giao hàng</label>
+                <div>
+                    <input type="date" name="start_giaoHang" class="dropdown-filter-item">
+                    <input type="date" name="end_giaoHang" onchange="this.form.submit()" class="dropdown-filter-item">
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Mã đơn hàng</th>
+                <th>Tên khách hàng</th>
+                <th>Trạng thái đơn hàng</th>
+                <th>Ngày thanh toán</th>
+                <th>Ngày giao hàng</th>
+                <th>Nhân viên</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.maDonHang</td>
+                    <td>@item.PhieuDat.KhachHang.tenKhachHang</td>
+                    <td>@item.trangThaiDonHang</td>
+                    <td>@(item.ngayThanhToan.HasValue ? item.ngayThanhToan.Value.ToString("dd/MM/yyyy") : "Chưa thanh toán")</td>
+                    <td>@(item.ngayGiaoHang.HasValue ? item.ngayGiaoHang.Value.ToString("dd/MM/yyyy") : "Chưa cập nhật ngày giao hàng")</td>
+                    <td>@item.NhanVien.tenNhanVien</td>
+                    <td>
+                        <a class="edit-btn" asp-controller="DonHang" asp-action="Details" asp-route-id="@item.maDonHang">
+                            <img src="/images/view.png">
+                        </a>
+                        <a class="edit-btn" asp-controller="DonHang" asp-action="Edit" asp-route-id="@item.maDonHang">
+                            <img src="/images/pen.png">
+                        </a>
+                        <a class="delete-btn" asp-controller="DonHang" asp-action="Delete" asp-route-id="@item.maDonHang">
+                            <img src="/images/bin.png">
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

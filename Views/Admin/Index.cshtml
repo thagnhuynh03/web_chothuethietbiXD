@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="main_content">
+    <h2> QUẢN LÝ NGƯỜI DÙNG</h2>
+    <div class="button" id="employee_button">
+        <a href="@Url.Action("Index", "NhanVien")">Nhân viên</a>
+    </div>
+    <div class="button" id="customer_button">
+        <a href="@Url.Action("Index", "KhachHang")">Khách hàng</a>
+    </div>
+</div>

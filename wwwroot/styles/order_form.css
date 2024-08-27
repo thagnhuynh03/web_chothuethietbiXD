@@ -1,0 +1,141 @@
+.flex_col {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 32px;
+}
+
+main {
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    margin-top: 0 !important;
+}
+
+.main_content {
+    width: 76%;
+    margin-top: 12px;
+    background-color: #fff;
+    padding: 32px;
+}
+
+    .main_content .form_title {
+        text-transform: uppercase;
+    }
+
+    .main_content .form_content {
+        margin: 32px 32px 120px;
+        gap: 40px;
+    }
+
+.form_content .infor_title {
+    font-weight: 550;
+}
+
+.form_content .delivery_infor,
+.form_content .additional_infor {
+    gap: 16px;
+}
+
+.form_content textarea {
+    resize: none;
+    height: 10em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.form_content input[type="text"],
+.form_content input[type="tel"],
+.form_content textarea {
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 6px;
+    outline: none;
+    border: 1px solid #ccc;
+    font-family: inherit;
+}
+
+.products_infor {
+    gap: 16px;
+}
+
+#products_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px auto;
+    border: solid 1px #D1D3D6;
+}
+
+.products_infor thead {
+    height: 68px;
+    background-color: #FAFAFA;
+    border: solid 1px #CDCDCD;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+    .products_infor thead th {
+        width: calc(100% / 6);
+        text-align: center;
+        font-weight: 400;
+    }
+
+.products_infor tbody tr {
+    height: 68px;
+    font-size: 13px;
+    text-align: center;
+}
+
+    .products_infor tbody tr > :first-child {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 72px;
+        width: 12em;
+        overflow: hidden;
+    }
+
+    .products_infor tbody tr > :nth-child(2) {
+        font-weight: 600;
+        text-align: left;
+    }
+
+    .products_infor tbody tr > :nth-child(3) {
+        color: #D10024;
+    }
+
+    .products_infor tbody tr > :nth-child(4) input {
+        width: 32px;
+    }
+
+.products_infor .total_price {
+    text-align: right;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+    .products_infor .total_price span {
+        margin-left: 60px;
+        color: #15161D;
+    }
+
+#products_table input {
+    background-color: #f1f1f1;
+    padding: 4px 0;
+    border: none;
+    outline: none;
+}
+
+.order_action .order_button {
+    padding: 12px 32px;
+    float: right;
+    background-color: #000;
+    color: #fff;
+    text-transform: uppercase;
+    border: none;
+}
+
+
+.products_infor img {
+    width: 72px;
+    height: auto;
+    object-fit: contain;
+}

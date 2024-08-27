@@ -1,0 +1,159 @@
+﻿@using Microsoft.EntityFrameworkCore;
+@{
+
+    var danhSachSanPhams = ViewData["danhSachSanPhams"] as List<WebChoThueThietBiXD.Models.ThietBi>;
+    var selectedCategories = (ViewBag.SelectedCategories as string)?.Split(',').Select(int.Parse).ToList() ?? new List<int>();
+    var selectedBrands = (ViewBag.SelectedBrands as string)?.Split(',').Select(int.Parse).ToList() ?? new List<int>();
+    var sortOrder = ViewBag.SortOrder as string;
+    var userName = User.Identity.Name;
+    var user = _context.TaiKhoan.FirstOrDefault(u => u.tenDangNhap == userName);
+    var gioHang = new List<WebChoThueThietBiXD.Models.GioHang>();
+    if (user != null)
+    {
+        gioHang = _context.GioHang
+            .Include(g => g.ThietBi) // Ensure 'Include' is recognized and ThietBi is the correct navigation property
+            .Where(t => t.maTaiKhoan == user.maTaiKhoan)
+            .ToList();
+    }
+}
+
+@inject WebChoThueThietBiXD.Data.WebChoThueThietBiXDContext _context
+@section Head {
+    <link rel="stylesheet" href="/styles/product_list.css">
+  
+}
+<main>
+    <div class="main_content">
+        <div class="products_filter">
+            <div class="products_category_filter">
+                <h4>Danh mục</h4>
+                <ul class="products_category_list">
+                    @foreach (var category in ViewBag.Categories)
+                    {
+                        <li>
+                            <input type="checkbox" name="category" value="@category.maDanhMuc" id="category_@category.maDanhMuc" @(selectedCategories.Contains(category.maDanhMuc) ? "checked" : "") />
+                            <label for="category_@category.maDanhMuc">@category.tenDanhMuc</label>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="products_brand_filter">
+                <h4>Hãng</h4>
+                <ul class="products_brand_list">
+                    @foreach (var brand in ViewBag.Brands)
+                    {
+                        <li>
+                            <input type="checkbox" name="brand" value="@brand.maHang" id="brand_@brand.maHang" @(selectedBrands.Contains(brand.maHang) ? "checked" : "") />
+                            <label for="brand_@brand.maHang">@brand.tenHang</label>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <button class="products_filt_button" onclick="filterProducts()">Lọc</button>
+        </div>
+
+        <div class="products_container">
+            <ul class="sort_bar">
+                <li><button onclick="applySort('name-asc')" @(sortOrder == "name-asc" ? "class='active'" : "")>Tên A - Z</button></li>
+                <li><button onclick="applySort('name-desc')" @(sortOrder == "name-desc" ? "class='active'" : "")>Tên Z - A</button></li>
+                <li><button onclick="applySort('price-asc')" @(sortOrder == "price-asc" ? "class='active'" : "")>Giá tăng dần</button></li>
+                <li><button onclick="applySort('price-desc')" @(sortOrder == "price-desc" ? "class='active'" : "")>Giá giảm dần</button></li>
+            </ul>
+
+            <div class="products_list">
+                @foreach (var product in danhSachSanPhams)
+                {
+                    <div class="product_item">
+                        @{
+                            var img = _context.HinhAnhThietBi.Where(h => h.maThietBi == product.maThietBi).FirstOrDefault().hinhAnh;
+
+                        }
+                        <div class="product_img">
+                            <img src="@img" alt="Product Image">
+                        </div>
+                    
+                        <p class="product_name">@product.tenThietBi</p>
+                        <p class="product_rent_cost"><span class="price">@product.giaThue</span> /ngày </p>
+                        <div class="product_action flex">
+                            <button class="add_cart_btn" data-url="@Url.Action("AddToCart", "Home", new { maTB = product.maThietBi })">
+                                <a id="Cart_update" data-url='@Url.Action("CartPreview", "Home")'>Thêm vào giỏ</a>
+                            </button>
+                            <button class="view_more_btn">
+                                <a href="@Url.Action("product_detail", "product_detail", new { id = product.maThietBi })">
+                                    Xem thêm
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="pagination">
+            <!-- Pagination logic here if needed -->
+        </div>
+    </div>
+</main>
+<div class="cart_previewer">
+    <h3>GIỎ HÀNG</h3>
+    <div class="cart_previewer_products">
+        @await Html.PartialAsync("_CartPreview", gioHang)
+    </div>
+    <button id="order" href="" class="create_pd primary-button"><a href="@Url.Action("PhieuDat", "PhieuDat")">TẠO PHIẾU ĐẶT</a></button>
+</div>
+<div class="blur_overlay cart"></div>
+<script src="/js/cart.js"></script>
+<script src="/js/delete_cart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function initCartPreviewer() {
+            const bg = document.querySelector('.blur_overlay.cart');
+            const cartButton = document.querySelector('.open_cart_button');
+
+            if (cartButton && bg) {
+                cartButton.addEventListener('click', e => {
+                    document.querySelector('.cart_previewer').classList.add('active');
+                    bg.classList.add('active');
+                });
+
+                function handleClose() {
+                    document.querySelector('.cart_previewer').classList.remove('active');
+                    bg.classList.remove('active');
+                }
+
+                bg.addEventListener('click', handleClose);
+            } else {
+                console.error("Element not found: .open_cart_button or .blur_overlay.cart");
+            }
+        }
+
+        initCartPreviewer();
+    });
+    function filterProducts() {
+        var selectedCategories = [];
+        document.querySelectorAll('input[name="category"]:checked').forEach(function (checkbox) {
+            selectedCategories.push(checkbox.value);
+        });
+
+        var selectedBrands = [];
+        document.querySelectorAll('input[name="brand"]:checked').forEach(function (checkbox) {
+            selectedBrands.push(checkbox.value);
+        });
+
+        var url = '@Url.Action("Category", "Home")' + '?maDM=' + selectedCategories.join(',') + '&maHang=' + selectedBrands.join(',');
+        window.location.href = url;
+    }
+    function applySort(sortOrder) {
+        var selectedCategories = [];
+        document.querySelectorAll('input[name="category"]:checked').forEach(function (checkbox) {
+            selectedCategories.push(checkbox.value);
+        });
+
+        var selectedBrands = [];
+        document.querySelectorAll('input[name="brand"]:checked').forEach(function (checkbox) {
+            selectedBrands.push(checkbox.value);
+        });
+
+        var url = '@Url.Action("Category", "Home")' + '?maDM=' + selectedCategories.join(',') + '&maHang=' + selectedBrands.join(',') + '&sortOrder=' + sortOrder;
+        window.location.href = url;
+    }
+</script>

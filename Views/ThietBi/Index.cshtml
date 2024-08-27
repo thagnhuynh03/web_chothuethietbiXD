@@ -1,0 +1,82 @@
+﻿@model IEnumerable<WebChoThueThietBiXD.Models.ThietBi>
+
+@{
+    ViewData["Title"] = "Quản lý thiết bị";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main_content">
+    <div class="title-and-actions">
+        <h2>Danh sách thiết bị</h2>
+        <div class="actions">
+            <a class="add-btn" href="~/ThietBi/Create">
+                <img src="/images/add.png" class="icon">
+                <span style="text-decoration:none !important;">Thêm</span>
+            </a>
+        </div>
+    </div>
+    <div class="search-container">
+        <form asp-controller="ThietBi" asp-action="Search">
+            <input type="text" class="search-input" id="txtSearch" name="query" placeholder="Tìm kiếm theo mã thiết bị hoặc tên">
+            <button type="submit" id="btnSearch" style="display:none;">Search</button>
+        </form>
+        <button class="filter-btn" onclick="toggleDropdown()">
+            <img src="/images/filter.png" class="icon">
+            <span>Lọc</span>
+        </button>
+    </div>
+    <form asp-controller="ThietBi" asp-action="Filter">
+        <div id="dropdown-filter" class="dropdown-filter-content">
+            <select id="maDanhMuc" name="maDanhMuc" onchange="this.form.submit()" class="dropdown-filter-item" style="margin-right:10px;">
+                <option value="">Danh mục</option>
+                @foreach (var item in ViewBag.maDanhMuc)
+                {
+                    <option value="@item.Value">@item.Text</option>
+                }
+            </select>
+            <select id="maHang" name="maHang" onchange="this.form.submit()" class="dropdown-filter-item">
+                <option value="">Hãng</option>
+                @foreach (var item in ViewBag.maHang)
+                {
+                    <option value="@item.Value">@item.Text</option>
+                }
+            </select>
+        </div>
+    </form>
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Mã thiết bị</th>
+                <th>Tên thiết bị</th>
+                <th>Nhà sản xuất</th>
+                <th>Giá thuê</th>
+                <th>Số lượng còn lại</th>
+                <th>Danh mục</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="dataBody">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.maThietBi</td>
+                    <td>@item.tenThietBi</td>
+                    <td>@item.Hang.tenHang</td>
+                    <td>@item.giaThue</td>
+                    <td>@item.soLuongCon</td>
+                    <td>@item.DanhMucThietBi.tenDanhMuc</td>
+                    <td>
+                        <a class="edit-btn" asp-controller="ThietBi" asp-action="Edit" asp-route-id="@item.maThietBi">
+                            <img src="/images/pen.png">
+                        </a>
+                        <a asp-controller="ThietBi" asp-action="Delete" asp-route-id="@item.maThietBi" class="delete-btn">
+                            <img src="/images/bin.png">
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>

@@ -1,0 +1,110 @@
+﻿@model WebChoThueThietBiXD.ViewModels.PhieuDatModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main_content">
+    <div class="form-container">
+        <div class="title">
+            <a href="~/PhieuDat"><img src="/images/left.png"></a>
+            <h2>Cập nhật phiếu đặt</h2>
+        </div>
+
+        <form asp-action="Edit">
+            <div class="form-group inline">
+                <div class="half-width hidden">
+                    <label for="maPhieuDat">Mã phiếu đặt:</label>
+                    <input type="text" id="maPhieuDat" name="maPhieuDat" asp-for="maPhieuDat" readonly>
+                </div>
+                <div class="half-width hidden">
+                    <label for="tenKhachHang">Tên khách hàng:</label>
+                    <input type="text" id="tenKhachHang" name="tenKhachHang" asp-for="khachHang.tenKhachHang" readonly>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="half-width hidden">
+                    <label for="ngayTaoPhieu">Ngày tạo phiếu:</label>
+                    <input type="date" id="ngayTaoPhieu" name="ngayTaoPhieu" asp-for="ngayTaoPhieu" readonly>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="soDienThoaiGiaoHang">Số điện thoại giao hàng:</label>
+                <input type="text" id="soDienThoaiGiaoHang" name="soDienThoaiGiaoHang" asp-for="soDienThoaiGiaoHang">
+                <span asp-validation-for="soDienThoaiGiaoHang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="diaCHiGiaoHang">Địa chỉ giao hàng:</label>
+                <input type="text" id="diaCHiGiaoHang" name="diaCHiGiaoHang" asp-for="diaCHiGiaoHang">
+                <span asp-validation-for="diaCHiGiaoHang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="ghiChu">Ghi chú:</label>
+                <textarea id="ghiChu" name="ghiChu" asp-for="ghiChu"></textarea>
+                <span asp-validation-for="ghiChu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="trangThaiPhieuDat">Trạng thái:</label>
+                <select id="trangThaiPhieuDat" name="trangThaiPhieuDat" asp-for="trangThaiPhieuDat">
+                    <option value="">Trạng thái</option>
+                    <option value="Chưa xác nhận">Chưa xác nhận</option>
+                    <option value="Đã xác nhận">Đã xác nhận</option>
+                    <option value="Đã hủy">Đã hủy</option>
+                </select>
+            </div>
+            <div class="device-info">
+                <div class="title-and-actions" style="margin-top: 50px;">
+                    <h3>Danh sách phiếu đặt</h3>
+                    <div class="actions">
+                        <a class="add-btn" href="~/ChiTietPhieuDat/Create">
+                            <img src="/images/add.png" class="icon">
+                            <span>Thêm</span>
+                        </a>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã chi tiết phiếu đặt</th>
+                            <th>Tên thiết bị</th>
+                            <th>Số lượng</th>
+                            <th>Giá thuê</th>
+                            <th>Ngày bắt đầu</th>
+                            <th>Ngày kết thúc</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.chiTietPhieuDats)
+                        {
+                            <tr>
+                                <td>@item.maChiTietPhieuDat</td>
+                                <td>@(item.ThietBi != null ? item.ThietBi.tenThietBi : "N/A")</td>
+                                <td>@item.soLuongThue</td>
+                                <td>@item.giaThueNgay.ToString("#,##0.## đ")</td>
+                                <td>@item.ngayBatDauThue.ToString("dd/MM/yyyyy hh:mm tt")</td>
+                                <td>@item.ngayKetThucThue.ToString("dd/MM/yyyyy hh:mm tt")</td>
+                                <td>
+                                    <a class="edit-btn" asp-controller="ChiTietPhieuDat" asp-action="Edit" asp-route-id="@item.maChiTietPhieuDat">
+                                        <img src="/images/pen.png">
+                                    </a>
+                                    <a class="delete-btn" asp-controller="ChiTietPhieuDat" asp-action="Delete" asp-route-id="@item.maChiTietPhieuDat">
+                                        <img src="/images/bin.png">
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Lưu lại</button>
+                <a href="~/PhieuDat" class="btn-secondary">Hủy bỏ</a>
+
+            </div>
+        </form>
+    </div>
+</div>
+

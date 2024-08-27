@@ -1,0 +1,143 @@
+.border_image {
+    outline: 1px solid #E4E7ED;
+}
+
+main {
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    margin-top:0 !important;
+}
+
+
+.main_content {
+    margin-top: 12px;
+    background-color: #f8f9fa;
+    padding: 0.5em max(1em, 12vw);
+}
+
+.product {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* padding: 40px 16px; */
+    gap: 30px;
+    background-color: #fff;
+    padding: 16px;
+}
+
+.product_images {
+    grid-column: span 1;
+    flex-direction: column;
+    height: 22em;
+}
+
+    .product_images .zoom_image {
+        text-align: center;
+        margin-bottom: 2em;
+        height: 15em;
+    }
+
+    .product_images .list_images {
+        display: flex;
+        justify-content: space-around;
+        height: 6em;
+        width: 100%;
+        gap: 12px;
+        padding: 0 10%;
+        overflow: hidden;
+    }
+
+        .product_images .list_images img {
+            flex: 1;
+            display: block;
+            height: 98%;
+            width: 100%;
+            object-fit: contain;
+            padding: 8px;
+        }
+
+            .product_images .list_images img:hover {
+                outline: 1px solid #E4E7ED;
+            }
+
+
+
+.product_info {
+    grid-column: span 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-left: 16px;
+}
+
+    .product_info .product_name {
+        padding-bottom: 8px;
+        border-bottom: #c1c1c1 solid 1px;
+        color: #15161D;
+    }
+
+    .product_info span {
+        color: #D10024;
+    }
+
+    .product_info .product_rent_cost span {
+        font-weight: 600;
+        font-size: 1.3rem;
+    }
+
+    .product_info .product_action {
+        font-size: 0.9rem;
+        justify-content: start;
+        gap: 5%;
+    }
+
+        .product_info .product_action button {
+            color: #fff;
+            border: none;
+            padding: 12px;
+        }
+
+        .product_info .product_action .add_cart_btn {
+            background-color: #D10024;
+        }
+
+        .product_info .product_action .order_btn {
+            background-color: #15161D;
+        }
+
+.product_description {
+    grid-column: span 2;
+    margin-top: 32px;
+    border: 1px solid #E4E7ED;
+    height: 15em;
+    padding: 20px;
+}
+
+    .product_description h3,
+    .recommended_products h3 {
+        text-align: center;
+        margin-bottom: 24px;
+        color: #15161D;
+        text-transform: uppercase;
+    }
+
+.recommended_products {
+    margin-top: 40px;
+    margin-bottom: 84px;
+}
+
+    .recommended_products .list_products {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px; /* Khoảng cách giữa các div con */
+    }
+
+h3::after {
+    content: '';
+    margin: 0.5em;
+    display: block;
+    background-color: #D10024;
+    height: 0.15em;
+    transform: scaleX(0.05);
+}

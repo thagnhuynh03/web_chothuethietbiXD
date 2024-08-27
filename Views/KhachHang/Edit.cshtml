@@ -1,0 +1,71 @@
+﻿@model WebChoThueThietBiXD.Models.KhachHang
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .form {
+        margin-top: 20px;
+        display: inline-flex;
+        justify-content: space-between;
+        font-size: 15px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column; /* Xếp các phần tử con theo chiều dọc */
+    }
+</style>
+<div class="main_content">
+    <h1>Chỉnh sửa</h1>
+
+    <h4>Khách hàng</h4>
+
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="maKhachHang" />
+                <div class="form-group">
+                    <label asp-for="tenKhachHang" class="control-label">Tên khách hàng</label>
+                    <input asp-for="tenKhachHang" class="form-control" />
+                    <span asp-validation-for="tenKhachHang" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ngaySinh" class="control-label">Ngày sinh</label>
+                    <input asp-for="ngaySinh" class="form-control" />
+                    <span asp-validation-for="ngaySinh" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label">Email</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="soDienThoai" class="control-label">Số điện thoại</label>
+                    <input asp-for="soDienThoai" class="form-control" />
+                    <span asp-validation-for="soDienThoai" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="diaChi" class="control-label">Địa chỉ</label>
+                    <input asp-for="diaChi" class="form-control" />
+                    <span asp-validation-for="diaChi" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="maTaiKhoan" class="control-label">Mã tài khoản</label>
+                    <select asp-for="maTaiKhoan" class="form-control" asp-items="ViewBag.maTaiKhoan"></select>
+                    <span asp-validation-for="maTaiKhoan" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+

@@ -1,0 +1,35 @@
+﻿@model WebChoThueThietBiXD.ViewModels.HinhAnhViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main_content">
+    <div class="form-container">
+        <div class="title">
+            <a href="~/PhieuDat"><img src="/images/left.png"></a>
+            <h2>Thêm hình ảnh thiết bị</h2>
+        </div>
+
+        <form asp-action="Create">
+            <div class="form-group">
+                <label for="maThietBi">Thiết bị:</label>
+                <select id="maThietBi" asp-for="maThietBi">
+                    <option value="">Thiết bị</option>
+                    @foreach (var item in ViewBag.maThietBi)
+                    {
+                        <option value="@item.Value">@item.Value | @item.Text</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="file">Hình ảnh thiết bị:</label>
+                <input id="file" asp-for="hinhAnh" class="form-control" required />
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Lưu lại</button>
+            </div>
+        </form>
+    </div>

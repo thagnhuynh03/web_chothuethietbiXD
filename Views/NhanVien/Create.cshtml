@@ -1,0 +1,80 @@
+﻿@model WebChoThueThietBiXD.Models.NhanVien
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .form {
+        margin-top: 20px;
+        display: inline-flex;
+        justify-content: space-between;
+        font-size: 15px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column; /* Xếp các phần tử con theo chiều dọc */
+    }
+</style>
+<div class="main_content">
+    <h2> QUẢN LÝ NGƯỜI DÙNG</h2>
+    <div class="button" id="employee_button">
+        <a href="@Url.Action("Index", "NhanVien")">Nhân viên</a>
+    </div>
+    <div class="button" id="customer_button">
+        <a href="@Url.Action("Index", "KhachHang")">Khách hàng</a>
+    </div>
+    <h1>Tạo mới</h1>
+    <h4>Nhân viên</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="tenNhanVien" class="control-label">Tên nhân viên</label>
+                    <input asp-for="tenNhanVien" class="form-control" />
+                    <span asp-validation-for="tenNhanVien" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ngaySinh" class="control-label">Ngày sinh</label>
+                    <input asp-for="ngaySinh" class="form-control" />
+                    <span asp-validation-for="ngaySinh" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label">Email</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="soDienThoai" class="control-label">Số điện thoại</label>
+                    <input asp-for="soDienThoai" class="form-control" />
+                    <span asp-validation-for="soDienThoai" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="tienLuong" class="control-label">Tiền lương</label>
+                    <input asp-for="tienLuong" class="form-control" />
+                    <span asp-validation-for="tienLuong" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="diaChi" class="control-label">Địa chỉ</label>
+                    <input asp-for="diaChi" class="form-control" />
+                    <span asp-validation-for="diaChi" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="maTaiKhoan" class="control-label">Mã tài khoản</label>
+                    <select asp-for="maTaiKhoan" class="form-control" asp-items="ViewBag.maTaiKhoan"></select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+

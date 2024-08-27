@@ -1,0 +1,87 @@
+﻿@model IEnumerable<WebChoThueThietBiXD.Models.KhachHang>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    a {
+        text-decoration: none; /* Loại bỏ dấu gạch dưới */
+        color: #007bff; /* Tùy chỉnh màu sắc của liên kết */
+    }
+
+        a:hover {
+            text-decoration: underline; /* Thêm dấu gạch dưới khi di chuột qua */
+        }
+</style>
+<div class="main_content">
+    <h2> QUẢN LÝ NGƯỜI DÙNG</h2>
+    <div class="button" id="employee_button">
+        <a href="@Url.Action("Index", "NhanVien")">Nhân viên</a>
+    </div>
+    <div class="button" id="customer_button">
+        <a href="@Url.Action("Index", "KhachHang")">Khách hàng</a>
+
+    </div>
+    <br />
+    <br />
+    <h2>DANH SÁCH KHÁCH HÀNG</h2>
+    <p>
+        <a asp-action="Create">Tạo Khách hàng mới</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Tên khách hàng
+                </th>
+                <th>
+                    Ngày sinh
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Số điện thoại
+                </th>
+                <th>
+                    Địa chỉ
+                </th>
+                <th>
+                    Tài khoản
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.tenKhachHang)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ngaySinh)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Email)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.soDienThoai)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.diaChi)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TaiKhoan.tenDangNhap)
+    </td>
+    <td>
+        <a asp-action="Edit" asp-route-id="@item.maKhachHang">Edit</a> |
+        <a asp-action="Details" asp-route-id="@item.maKhachHang">Details</a> |
+        <a asp-action="Delete" asp-route-id="@item.maKhachHang">Delete</a>
+    </td>
+</tr>}
+        </tbody>
+    </table>
+</div>

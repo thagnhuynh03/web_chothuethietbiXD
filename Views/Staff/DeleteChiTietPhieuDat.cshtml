@@ -1,0 +1,41 @@
+﻿@model WebChoThueThietBiXD.Models.ChiTietPhieuDat
+
+@{
+    ViewData["Title"] = "DeleteChiTietPhieuDat";
+    Layout = "~/Views/Shared/_StaffLayout.cshtml";
+}
+
+<div class="main_content" style="height: auto; margin-top: 150px; margin-left: 300px; ">
+    <div class="container">
+        <h1>Xóa chi tiết phiếu đặt</h1>
+
+        <div class="form-group">
+            <label>Số lượng thuê:</label>
+            <span>@Model.soLuongThue</span>
+        </div>
+        <div class="form-group">
+            <label>Giá thuê ngày:</label>
+            <span>@Model.giaThueNgay</span>
+        </div>
+        <div class="form-group">
+            <label>Ngày bắt đầu thuê:</label>
+            <span>@Model.ngayBatDauThue.ToString("yyyy-MM-dd")</span>
+        </div>
+        <div class="form-group">
+            <label>Ngày kết thúc thuê:</label>
+            <span>@Model.ngayKetThucThue.ToString("yyyy-MM-dd")</span>
+        </div>
+        <div class="form-group">
+            <label>Thiết bị:</label>
+            <span>@Model.ThietBi.tenThietBi</span>
+        </div>
+
+        <form asp-action="DeleteChiTietPhieuDat">
+            <input type="hidden" asp-for="maChiTietPhieuDat" />
+            <div class="form-group">
+                <input type="submit" value="Xóa" class="btn btn-danger" />
+                <a class="btn btn-secondary" href="javascript:history.back()">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>

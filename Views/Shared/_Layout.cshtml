@@ -1,0 +1,84 @@
+﻿@inject WebChoThueThietBiXD.Data.WebChoThueThietBiXDContext _context
+
+@{
+    var danhMucThietBis = _context.DanhMucThietBi.ToList();
+    var userName = User.Identity.Name;
+    var user = _context.TaiKhoan.FirstOrDefault(u => u.tenDangNhap == userName);
+    var gioHang = new List<WebChoThueThietBiXD.Models.GioHang>();
+    if (user != null)
+    {
+        gioHang = _context.GioHang
+            .Where(t => t.maTaiKhoan == user.maTaiKhoan)
+            .ToList();
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles/index.css">
+    <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/global.css">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/footer.css">
+    <link rel="stylesheet" href="/styles/product.css">
+
+    <link rel="stylesheet" href="/styles/staff.css">
+    <link rel="stylesheet" href="/styles/address_select.css">
+    
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/images/font-awesome-4.7.0/css/font-awesome.min.css">
+    @RenderSection("Head", required: false)
+</head>
+<body>
+    <!-- Header -->
+    @await Html.PartialAsync("_Header", danhMucThietBis)
+
+    <!-- Navigation -->
+    @await Html.PartialAsync("_Navigation", danhMucThietBis)
+
+    <!-- Main Content -->
+    @RenderBody()
+
+    <!-- Footer -->
+    @await Html.PartialAsync("_Footer")
+
+    <script src="/js/addr.js"></script>
+    <script src="/js/header.js"></script>
+    <script src="/js/sticky_nav.js"></script>
+    <script src="/js/price_format.js"></script>
+    <script>
+        function toggleOptions(id) {
+            const optionsList = document.getElementById(id);
+            optionsList.style.display = optionsList.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function selectOption(group, value) {
+            document.getElementById(group + 'Selected').innerText = value;
+            document.getElementById(group + 'Options').style.display = 'none';
+            updateAddress();
+        }
+
+        function updateAddress() {
+            const soNha = document.getElementById('soNha').value;
+            const province = document.getElementById('provinceSelected').innerText;
+            const district = document.getElementById('districtSelected').innerText;
+            const ward = document.getElementById('wardSelected').innerText;
+
+            const diaChi = `${soNha}, ${ward}, ${district}, ${province}`;
+            document.getElementById('diaChi').value = diaChi;
+            document.getElementById('diaChiGiaoHang').value = diaChi;
+        }
+
+        document.getElementById('soNha').addEventListener('input', updateAddress);
+    </script>
+
+
+
+</body>
+</html>

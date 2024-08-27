@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@model TaiKhoan
+
+<!-- Form đăng ký -->
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "signup_form" }))
+{
+    <div class="signup_form__header">
+        <h5>ĐĂNG KÝ TÀI KHOẢN</h5>
+        <img class="signup_form_close_icon" src="/images/close_icon.svg" alt="" />
+    </div>
+
+    @Html.Hidden("actionType", "register")
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    @Html.TextBoxFor(m => m.tenDangNhap, new { @placeholder = "Tài khoản", @class = "signup_form__input form-control" })
+    @Html.PasswordFor(m => m.matKhau, new { @placeholder = "Mật khẩu", @class = "signup_form__input form-control" })
+    <input type="password" name="confirmPassword" class="signup_form__input form-control" placeholder="Nhập lại mật khẩu" />
+
+    <div class="form-group" hidden>
+        <label asp-for="maVaiTro" class="control-label"></label>
+        <select asp-for="maVaiTro" class="form-control" asp-items="ViewBag.maVaiTro">
+            <option value="3">Người dùng</option>
+        </select>
+    </div>
+
+    <button class="signup__submit_button" type="submit">ĐĂNG KÝ</button>
+    <p>Đã có tài khoản? <a href="#" class="red-text bold open_login_form_btn"> Đăng nhập</a></p>
+}
+<div class="blur_overlay signup"></div>
+

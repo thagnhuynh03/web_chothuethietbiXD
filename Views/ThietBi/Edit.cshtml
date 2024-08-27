@@ -1,0 +1,71 @@
+﻿@model WebChoThueThietBiXD.Models.ThietBi
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main_content">
+    <div class="form-container">
+        <div class="title">
+            <a href="~/ThietBi"><img src="/images/left.png"></a>
+            <h2>Cập nhật thiết bị</h2>
+        </div>
+
+        <form asp-action="Edit">
+            <div class="form-group hidden">
+                <label for="maThietBi">Mã sản phẩm:</label>
+                <input asp-for="maThietBi" type="text" id="maThietBi" name="maThietBi" readonly>
+            </div>
+            <div class="form-group">
+                <label for="tenThietBi">Tên sản phẩm:</label>
+                <input type="text" asp-for="tenThietBi" id="tenThietBi" name="tenThietBi">
+                <span asp-validation-for="tenThietBi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="maHang">Hãng:</label>
+                <select asp-for="maHang" id="maHang" name="maHang">
+                    <option value="">Chọn hãng</option>
+                    @foreach (var item in ViewBag.maHang)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
+                <span asp-validation-for="maHang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="moTa">Mô tả:</label>
+                <textarea asp-for="moTa" id="moTa" name="moTa"></textarea>
+                <span asp-validation-for="moTa" class="text-danger"></span>
+            </div>
+            <div class="form-group inline">
+                <div class="half-width">
+                    <label for="giaThue">Giá thuê:</label>
+                    <input type="number" asp-for="giaThue" id="giaThue" name="giaThue">
+                    <span asp-validation-for="giaThue" class="text-danger"></span>
+                </div>
+                <div class="half-width">
+                    <label for="soLuongCon">Số lượng còn:</label>
+                    <input type="number" asp-for="soLuongCon" id="soLuongCon" name="soLuongCon">
+                    <span asp-validation-for="giaThue" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="maDanhMuc">Danh mục:</label>
+                <select id="maDanhMuc" asp-for="maDanhMuc" name="maDanhMuc">
+                    <option value="">Chọn danh mục</option>
+                    @foreach (var item in ViewBag.maDanhMuc)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
+                <span asp-validation-for="maDanhMuc" class="text-danger"></span>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Lưu lại</button>
+                <a type="button" class="btn-secondary" href="~/ThietBi">Hủy bỏ</a>
+            </div>
+        </form>
+    </div>
+</div>
+

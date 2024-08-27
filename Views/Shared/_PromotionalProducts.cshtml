@@ -1,0 +1,39 @@
+﻿@model IEnumerable<WebChoThueThietBiXD.Models.ThietBi>
+@inject WebChoThueThietBiXD.Data.WebChoThueThietBiXDContext _context
+<div class="products_list">
+    @{
+        int index = 0;
+    }
+    @foreach (var itemm in Model)
+    {
+        if(index == 8)
+        {
+            break;
+        }
+        else
+        {
+            index += 1;
+        }
+        <div class="product_item">
+            @{
+                var img = _context.HinhAnhThietBi.Where(h => h.maThietBi == itemm.maThietBi).FirstOrDefault().hinhAnh;
+            }
+            <div class="product_img">
+                <img src="@img" alt="Product Image">
+            </div>
+         
+            <p class="product_name">@itemm.tenThietBi</p>
+            <p class="product_rent_cost"><span class="price">@itemm.giaThue</span> /ngày</p>
+            <div class="product_action flex">
+                <button class="add_cart_btn" data-url="@Url.Action("AddToCart", "Home", new { maTB = itemm.maThietBi })">
+                    <a id="Cart_update" data-url='@Url.Action("CartPreview", "Home")'>Thêm vào giỏ</a>
+                </button>
+                <button class="view_more_btn"><a href="@Url.Action("product_detail", "product_detail", new { id = itemm.maThietBi })">
+                    Xem thêm
+                 </a></button>
+            </div>
+        </div>
+    }
+</div>
+
+<script src="/js/cart.js"></script>

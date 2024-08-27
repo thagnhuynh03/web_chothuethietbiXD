@@ -1,0 +1,84 @@
+.flex_col {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    margin-top: 0 !important;
+}
+
+.main_content {
+    width: 76%;
+    margin-top: 12px;
+    display: flex;
+    gap: 20px
+}
+
+.nav_user {
+    width: 20%;
+    padding: 20px;
+}
+
+    .nav_user h3 {
+        margin-bottom: 24px;
+        color: #15161D;
+    }
+
+
+    .nav_user li {
+        list-style: none;
+        padding: 8px 0;
+        margin-left: 16px;
+    }
+
+        .nav_user li a {
+            text-decoration: none;
+            color: #000;
+        }
+
+.header_personal_option li:first-child a {
+    color: #D10024;
+}
+
+.infor_user {
+    background-color: #fff;
+    width: 80%;
+    padding: 20px 60px;
+    gap: 60px
+}
+
+    .infor_user .infor_title {
+        font-weight: 600;
+    }
+
+    .infor_user .personal_infor,
+    .infor_user .change_password {
+        gap: 16px;
+        margin-bottom: 60px
+    }
+
+    .infor_user .input_infor {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .infor_user input {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        outline: none;
+        font-size: 1rem;
+    }
+
+    .infor_user .update_button {
+        background-color: #15161D;
+        color: #fff;
+        border: none;
+        padding: 8px 12px;
+        text-transform: uppercase;
+        margin-bottom: 72px;
+    }

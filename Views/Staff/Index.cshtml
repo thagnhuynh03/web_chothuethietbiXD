@@ -1,0 +1,40 @@
+﻿@model WebChoThueThietBiXD.Models.NhanVien
+@{
+    ViewData["Title"] = "StaffProfile";
+    Layout = "~/Views/Shared/_StaffLayout.cshtml";
+}
+
+<div class="main_content" style="height: auto; margin-top: 150px; margin-left: 300px;">
+    <div class="container">
+        <h2 style="display: contents;">Thông tin cá nhân</h2>
+        <hr>
+
+        <div>
+            <div class="form-group">
+                <label for="hovaten">Họ tên:</label>
+                <input type="text" value="@ViewBag.NhanVien.tenNhanVien" id="hovaten" name="hovaten" readonly>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" id="email" value="@ViewBag.NhanVien.Email" name="email" readonly>
+            </div>
+            <div class="form-group">
+                <label for="so-dien-thoai">Số điện thoại:</label>
+                <input type="text" id="so-dien-thoai" value="@ViewBag.NhanVien.soDienThoai" name="so-dien-thoai" readonly>
+            </div>
+            <div class="form-group">
+                <label>Địa chỉ:</label>
+                <input type="text" id="diachi" value="@ViewBag.NhanVien.diaChi" name="diachi" readonly>
+            </div>
+            <div class="form-group">
+                <label for="ngaysinh">Ngày sinh:</label>
+                <input type="date" id="ngaysinh" value="@ViewBag.NhanVien.ngaySinh.ToString("yyyy-MM-dd")" name="ngaysinh" readonly>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a href="/Staff/StaffProfile"><button type="submit" class="btn-primary">Cập nhật thông tin</button></a>
+        </div>
+    </div>
+</div>
+

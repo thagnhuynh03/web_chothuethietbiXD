@@ -1,0 +1,39 @@
+﻿@model WebChoThueThietBiXD.Models.DonHang
+@{
+    ViewData["Title"] = "UpdateDonHang";
+    Layout = "~/Views/Shared/_StaffLayout.cshtml";
+}
+
+<div class="main_content" style="height: auto; margin-top: 150px; margin-left: 300px;">
+    <div class="container">
+        <h1>Cập nhật đơn hàng</h1>
+
+        <form asp-action="UpdateDonHang" method="post">
+            <div class="form-group" hidden>
+                <label>Mã đơn hàng</label>
+                <input type="text" class="form-control" asp-for="maDonHang" readonly />
+            </div>
+            <div class="form-group">
+                <label>Trạng thái đơn hàng</label>
+                <select class="form-control" asp-for="trangThaiDonHang">
+                    <option value="Đang xử lý">Đang xử lý</option>
+                    <option value="Đang giao hàng">Đang giao hàng</option>
+                    <option value="Đã giao hàng">Đã giao hàng</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Ngày thanh toán</label>
+                <input type="date" class="form-control" asp-for="ngayThanhToan" />
+            </div>
+            <div class="form-group">
+                <label>Ngày giao hàng</label>
+                <input type="date" class="form-control" asp-for="ngayGiaoHang" />
+            </div>
+            <div class="form-group">
+                <label>Nhân viên phụ trách</label>
+                <input type="text" class="form-control" value="@Model.NhanVien.tenNhanVien" readonly />
+            </div>
+            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+﻿@model WebChoThueThietBiXD.ViewModels.PhieuDatDetailsViewModel
+@{
+    ViewData["Title"] = "DetailsPhieuDat";
+    Layout = "~/Views/Shared/_StaffLayout.cshtml";
+}
+
+<div class="main_content" style="height: auto; margin-top: 150px; margin-left: 300px;">
+    <div class="container">
+        <h1>Chi tiết phiếu đặt</h1>
+
+        <div class="form-group">
+            <label>Ngày tạo phiếu:</label>
+            <span>@Model.NgayTaoPhieu.ToString("yyyy-MM-dd")</span>
+        </div>
+        <div class="form-group">
+            <label>Trạng thái phiếu đặt:</label>
+            <span>@Model.TrangThaiPhieuDat</span>
+        </div>
+        <div class="form-group">
+            <label>Địa chỉ giao hàng:</label>
+            <span>@Model.DiaChiGiaoHang</span>
+        </div>
+        <div class="form-group">
+            <label>Số điện thoại giao hàng:</label>
+            <span>@Model.SoDienThoaiGiaoHang</span>
+        </div>
+        <div class="form-group">
+            <label>Ghi chú:</label>
+            <span>@Model.GhiChu</span>
+        </div>
+        <div class="form-group">
+            <label>Khách hàng:</label>
+            <span>@Model.KhachHang</span>
+        </div>
+
+        <h2>Sản phẩm đã đặt</h2>
+        <a class="btn btn-primary" href="/Staff/CreateChiTietPhieuDat?maPhieuDat=@Model.MaPhieuDat">Thêm chi tiết phiếu đặt</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Số lượng thuê</th>
+                    <th>Giá thuê ngày</th>
+                    <th>Ngày bắt đầu thuê</th>
+                    <th>Ngày kết thúc thuê</th>
+                    <th>Thiết bị</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ChiTietPhieuDats)
+                {
+                    <tr>
+                        <td>@item.soLuongThue</td>
+                        <td>@item.giaThueNgay</td>
+                        <td>@item.ngayBatDauThue.ToString("yyyy-MM-dd")</td>
+                        <td>@item.ngayKetThucThue.ToString("yyyy-MM-dd")</td>
+                        <td>@item.ThietBi.tenThietBi</td>
+                        <td>
+                            <a class="btn btn-danger" href="/Staff/DeleteChiTietPhieuDat/@item.maChiTietPhieuDat">Xóa</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
